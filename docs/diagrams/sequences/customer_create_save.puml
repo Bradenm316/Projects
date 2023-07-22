@@ -1,0 +1,10 @@
+@startuml
+actor Customer
+Customer -> Account: Create Account
+Account -> Customer: Account Created
+Customer -> Account: Save Payment and Shipping Information
+Account -> Payment: Save Payment Information
+Payment -> Account: Payment Information Saved
+Account -> Shipping: Save Shipping Information
+Shipping -> Account: Shipping Information Saved
+@enduml

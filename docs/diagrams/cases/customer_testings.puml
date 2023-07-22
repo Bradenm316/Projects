@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+actor Customer
+rectangle OnlineStoreTestings{
+  Customer --> (Browse and Customize Cake Orders)
+  Customer --> (Create Account and Save Payment and Shipping Information)
+  Customer --> (Access Catering Section and Go Through Processes)
+  Customer --> (Login to User Accounts)
+  Customer --> (Upload Image, URL, or PDF File of Design)
+  Customer --> (Access Available Virtual Customization on Business Owner Site)
+  Customer --> (Get Reward Points Every Time They Purchase an Item)
+  Customer --> (Use Special Discount Code to Purchase a Cake)
+  Customer --> (Check Description and Price of Order After Customer Makes Order)
+}
+@enduml

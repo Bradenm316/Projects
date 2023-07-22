@@ -1,11 +1,22 @@
 @startuml packages
 set namespaceSeparator none
 package "testing" as testing #aliceblue {
+    usecase "Access Available Virtual Customization on Business Owner Site" as access_customization
 }
 package "testing.auth_tests" as testing.auth_tests #aliceblue {
+    usecase "Create Account and Save Payment and Shipping Information" as create_account
+    usecase "Login to User Accounts" as login
 }
 package "testing.core_tests" as testing.core_tests #aliceblue {
+    usecase "Browse and Customize Cake Orders" as browse_customize
+    usecase "Access Catering Section and Go Through Processes" as access_catering
+    usecase "Upload Image, URL, or PDF File of Design" as upload_file
+    usecase "Get Reward Points Every Time They Purchase an Item" as get_reward_points
+    usecase "Use Special Discount Code to Purchase a Cake" as use_discount_code
 }
 package "testing.db_tests" as testing.db_tests #aliceblue {
+    usecase "Manage Inventory" as manage_inventory
+    usecase "Review and Compare Customers Orders or Store Sales" as review_compare
+    usecase "Check Description and Price of Order After Customer Makes Order" as check_order_description
 }
 @enduml

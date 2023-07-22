@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+actor BusinessOwner
+rectangle OnlineStore {
+  BusinessOwner --> (Manage Inventory)
+  BusinessOwner --> (Review and Compare Customers Orders or Store Sales)
+}
+@enduml

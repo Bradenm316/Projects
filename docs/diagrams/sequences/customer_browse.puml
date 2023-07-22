@@ -1,0 +1,7 @@
+@startuml
+actor Customer
+Customer -> CakeShop: Browse Cake Options
+CakeShop -> Customer: Display Available Cakes
+Customer -> CakeShop: Customize Order
+CakeShop -> Customer: Display Customization Options
+@enduml
