@@ -1,0 +1,6 @@
+@startuml
+actor Customer
+Customer -> Checkout: Make Order
+Checkout -> Order: Save Order
+Order -> Customer: Show Order Description and Price
+@enduml

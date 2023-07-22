@@ -1,0 +1,13 @@
+@startuml
+actor BusinessOwner
+BusinessOwner -> System: Log in
+System -> BusinessOwner: Logged in
+BusinessOwner -> System: View Inventory
+System -> Inventory: Retrieve Inventory Data
+Inventory -> System: Inventory Data
+System -> BusinessOwner: Display Inventory Data
+BusinessOwner -> System: Update Inventory
+System -> Inventory: Update Inventory Data
+Inventory -> System: Inventory Data Updated
+System -> BusinessOwner: Display Inventory Data
+@enduml

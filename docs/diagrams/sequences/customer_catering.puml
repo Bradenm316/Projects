@@ -1,0 +1,11 @@
+@startuml
+actor Customer
+Customer -> System: Navigate to Catering Section
+System -> Customer: Display Catering Options
+Customer -> System: Select Catering Option
+System -> Customer: Display Catering Details
+Customer -> System: Enter Catering Details
+System -> Customer: Confirm Details
+Customer -> System: Submit Order
+System -> Customer: Display Order Confirmation
+@enduml

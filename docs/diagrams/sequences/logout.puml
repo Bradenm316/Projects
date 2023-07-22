@@ -1,0 +1,14 @@
+@startuml logout
+actor Customer
+boundary "System" as system
+control "Sessions" as sessions
+control "Authentication" as auth
+Customer -> system: Logout
+activate system
+system -> sessions: remove_session(username, db)
+activate sessions
+sessions --> system: None
+deactivate sessions
+system -> system: redirect to login page
+deactivate system
+@enduml

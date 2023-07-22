@@ -1,0 +1,11 @@
+@startuml
+actor BusinessOwner
+BusinessOwner -> System: Log in to Account
+System -> BusinessOwner: Display Dashboard
+BusinessOwner -> System: Select Orders or Sales
+System -> BusinessOwner: Display Orders or Sales Report
+BusinessOwner -> System: Filter Orders or Sales
+System -> BusinessOwner: Display Filtered Results
+BusinessOwner -> System: Compare Orders or Sales
+System -> BusinessOwner: Display Comparison Results
+@enduml
