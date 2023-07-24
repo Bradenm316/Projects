@@ -1,0 +1,7 @@
+@startuml
+actor Customer
+Customer -> System: Clicks on "Enter a discount code"
+System -> Customer: Displays a keypad to enter a code
+Customer -> System: Enters a code
+System -> Customer: Gives a percentage off of the order
+@enduml

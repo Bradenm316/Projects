@@ -1,0 +1,11 @@
+@startuml
+left to right direction
+actor Employee
+rectangle OnlineStoreTestings{
+  Employee --> (Receive and prepare the order)
+  Employee --> (Make/customize the cake to however the customer wants it)
+  Employee --> (Keep a note on what itmes needs to be restocked)
+  Employee --> (Bake the cake)
+  Employee --> (Package the cake and make sure it looks neat)
+}
+@enduml

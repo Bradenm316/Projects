@@ -1,0 +1,8 @@
+@startuml
+actor Customer
+Customer -> Store: Clicks on cancel order
+Store -> Customer: Asks a reason why they want to cancel
+Customer -> Store: Gives a reason
+Store -> Customer: Asks the customer to pay a fee
+Customer -> Store: Pays the fee
+@enduml
