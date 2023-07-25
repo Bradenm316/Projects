@@ -10,7 +10,7 @@ class "Sessions" as store.core.session.Sessions #aliceblue {
 class "UserSession" as store.core.session.UserSession #aliceblue {
   cart : dict
   date : datetime, NoneType
-  db
+  db : Database
   total_cost : int
   username : str
   add_new_item(id: str, name: str, price: int, quantity: int, discount: float, tax_rate: float) -> None
