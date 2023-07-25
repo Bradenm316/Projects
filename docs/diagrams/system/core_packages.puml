@@ -4,10 +4,10 @@ package "core" as core #aliceblue {
   usecase "Allows user to start session" as session
 }
 package "core.session" as core.session #aliceblue {
-  usecase "Allows user to access, modify, and check their cart during session"
+  usecase "Allows user to access, modify, and check their cart during session" as change_cart
 }
 package "core.utils" as core.utils #aliceblue {
-  usecase "Updates cost and item quantities from user session
+  usecase "Updates cost and item quantities from user session" as update_total
 }
 core.session --> core.utils
 @enduml
