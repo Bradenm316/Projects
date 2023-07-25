@@ -1,10 +1,13 @@
 @startuml packages
 set namespaceSeparator none
 package "core" as core #aliceblue {
+  usecase "Allows user to start session" as session
 }
 package "core.session" as core.session #aliceblue {
+  usecase "Allows user to access, modify, and check their cart during session"
 }
 package "core.utils" as core.utils #aliceblue {
+  usecase "Updates cost and item quantities from user session
 }
 core.session --> core.utils
 @enduml
