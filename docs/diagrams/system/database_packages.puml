@@ -1,9 +1,12 @@
 @startuml packages
 set namespaceSeparator none
 package "database" as database #aliceblue {
+    usecase "Allows customer to upload their desire design" as upload_design
 }
 package "database.db" as database.db #aliceblue {
+    usecase "Allows customer to access available online design" as virtual_design
 }
 package "database.reset_database" as database.reset_database #aliceblue {
+    usecase "System create new designing tools for customers" as virtual_design
 }
 @enduml

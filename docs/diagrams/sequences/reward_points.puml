@@ -1,0 +1,5 @@
+@startuml 
+actor Customer
+Customer -> System: Checkout
+System -> Customer: Give Reward Points
+@enduml

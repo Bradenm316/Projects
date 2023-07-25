@@ -1,0 +1,7 @@
+@startuml
+actor Customer
+Customer -> Customer: select design image
+Customer -> Order: customer view their vision of their design
+Customer -> Store: Order design is uploaded
+Store -> Customer: confirm available designing tools
+@enduml
