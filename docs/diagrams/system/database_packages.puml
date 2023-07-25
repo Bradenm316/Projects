@@ -7,6 +7,6 @@ package "database.db" as database.db #aliceblue {
     usecase "Allows customer to access available online design" as virtual_design
 }
 package "database.reset_database" as database.reset_database #aliceblue {
-    usecase "System create new designing tools for customers" as virtual_design
+    usecase "System create new designing tools for customers" as reset_virtual_design
 }
 @enduml
