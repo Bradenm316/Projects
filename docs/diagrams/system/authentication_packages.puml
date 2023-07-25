@@ -1,0 +1,13 @@
+@startuml packages
+set namespaceSeparator none
+package "authentication" as authentication #aliceblue {
+    usecase "Allows customers to create and save their passwords" as create_account
+}
+package "authentication.auth_tools" as authentication.auth_tools #aliceblue {
+    usecase "Allows customers to change their passwords" as change_password
+}
+package "authentication.passwords" as authentication.passwords #aliceblue {
+    usecase "Stores customers usernames" as store_username
+    usecase "Stores customers passwords" as store_passwords
+}
+@enduml

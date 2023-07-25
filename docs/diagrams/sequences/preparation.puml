@@ -1,0 +1,7 @@
+@startuml
+actor Employee
+Order -> Employee: Order gets sent in
+Employee -> Employee: Reviews the order
+Employee -> Employee: Makes sure all the items are available for the order
+Employee -> Order: Accepts the order if available/denys if not
+@enduml
