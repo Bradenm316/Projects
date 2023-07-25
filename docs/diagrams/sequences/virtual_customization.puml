@@ -1,0 +1,7 @@
+@startuml
+actor Business Owner
+Business Owner -> Website: create different cakes design
+Business Owner -> Website: upload designing tools
+Website -> Website: display all stores disigning tools
+Business Owner -> Website: save work.
+@enduml
