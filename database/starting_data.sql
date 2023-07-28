@@ -20,6 +20,15 @@ VALUES ('Cookies & Cream', 'Three layers of chocolate and three layers of vanill
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
 VALUES ('Pink Vanilla Dream', 'Six layers of vanilla cake iced in soft pink buttercream icing. Garnished with raspberry macarons, vanilla wafers, meringues, and white icing drip.', 39.99, 8, 'static/images/pinkVanillaDream.jpeg', 'Cake');
 
+INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
+VALUES ('Cheesecake', 'Consists of a thick, creamy filling over a thinner crust', 19.99, 15, 'static/images/cheesecake.jpeg', 'Cake');
+
+INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
+VALUES ('Tiramisu', 'Consists of layers of sponge cake soaked in coffee and brandy or liqueur with powdered chocolate and mascarpone cheese', 25.99, 12, 'static/images/tiramisu.jpeg', 'Cake');
+
+INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
+VALUES ('Chocolate Fudge', 'Thick layer of chocolate cake surrounding a melted chocolate inside', 36.99, 10, 'static/images/chocolate_fudge.jpeg', 'Cake');
+
 -- INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
 -- VALUES ();
 
