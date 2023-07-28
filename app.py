@@ -64,9 +64,9 @@ def login():
         sessions.add_new_session(username, db)
         return render_template('home.html', products=products, sessions=sessions)
     else:
+        password_incorrect = True
         print(f"Incorrect username ({username}) or password ({password}).")
-        return render_template('index.html')
-
+        return render_template('login.html', password_incorrect=password_incorrect)
 
 @app.route('/register')
 def register_page():

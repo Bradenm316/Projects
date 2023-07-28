@@ -14,7 +14,13 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-primary" id="login_button">Login</button>
+                    {% if password_incorrect %}
+                        <div class="alert alert-danger" role="alert">
+                        Incorrect Password. Please try again.
+                        </div>
+                    {% endif %}
         </form>
     </div>
 </div>
 {% endblock %}
+
