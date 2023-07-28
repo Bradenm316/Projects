@@ -10,14 +10,18 @@ VALUES ('llamport', '9171d14954eeda4e70777c23d98e349818125cdaeb884ff97ebf8cc0a9c
 INSERT into `users` (`username`, `password_hash`, `email`, `first_name`, `last_name`)
 VALUES ('bliskov', '1e4b9ae956cad1385cfa6fffd8323dd16c3fe18c54e6447e49bddef2138d042e84e1505a541c6ef19a5026e684b2559efd366145870a0a8d4d4173c0877f6cd2', 'barbara@thor.com', 'Barbara', 'Liskov');
 
+-- Inventories
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Apples', 'An edible cultivation of the Malus genus.', 2.00, 100, 'static/images/apple.jpeg', 'Fruit');
+VALUES ('Strawberry Covered Chocolate', 'Six layer of  chocolate cake filled with ganache then iced in strawberry buttercream. Garnished with ganache, chocolate dipped strawberries, fudge icing, chocolate pieces, and macarons.', 42.99, 6, 'static/images/strawberryCoveredChocolate.jpeg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Bananas', 'A long curved fruit which grows in clusters and has soft pulpy flesh and yellow skin when ripe.', 1.00, 100, 'static/images/banana.jpeg', 'Fruit');
+VALUES ('Cookies & Cream', 'Three layers of chocolate and three layers of vanilla cake filled with cookies and cream mousse and iced with alternating stripes of mousse and buttercream. Coated with chocolate ganache and then garnished with sandwich cookies, chocolate bars, and chocolate pieces.', 39.99, 10, 'static/images/cookiesCreamCake.jpeg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Mangos', 'The best fruit on the planet.', 4.00, 100, 'static/images/mango.jpeg', 'Fruit');
+VALUES ('Pink Vanilla Dream', 'Six layers of vanilla cake iced in soft pink buttercream icing. Garnished with raspberry macarons, vanilla wafers, meringues, and white icing drip.', 39.99, 8, 'static/images/pinkVanillaDream.jpeg', 'Cake');
+
+-- INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
+-- VALUES ();
 
 INSERT into `sales` (`transaction_id`, `username`, `item_id`, `quantity`, `sale_date`, `cost`)
 VALUES ('1', 'aturing', '1', 10, '2022-12-21 7:30:30', 5.50);
