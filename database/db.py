@@ -1,6 +1,7 @@
 from core.utils import dict_factory, calculate_cost
 import datetime as dt
 import sqlite3
+from model import Cake, Employee, Order
 
 
 class Database:
