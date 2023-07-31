@@ -1,0 +1,13 @@
+@app.route('/orders/<int:order_id>', methods=['GET', 'POST'])
+@login_required
+@role_required('employee')
+def view_order(order_id):
+    order = Order.query.get(order_id)
+    if request.method == 'POST':
+        if 'status' in request.form:
+            order.status = request.form['status']
+        if 'cancel_fee' in request.form:
+            order.cancel_fee = float(request.form['cancel_fee'])
+        db.session.commit()
+        return redirect(url_for('view_order', order_id=order.id))
+    return render_template('view_order.html', order=order)
