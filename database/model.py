@@ -5,16 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class Cake(db.Model):
-    """
-    Represents the 'cake' table in the database.
-
-    attributes:
-        - id: The primary key for the cake.
-        - flavor: The flavor of the cake.
-        - size: The size of the cake.
-        - frosting: The frosting of the cake.
-        - decoration: The decoration of the cake.
-    """
     __tablename__ = 'cake'
     id = db.Column(db.Integer, primary_key=True)
     flavor = db.Column(db.String(100), nullable=False)
