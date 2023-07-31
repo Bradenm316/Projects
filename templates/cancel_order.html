@@ -1,9 +1,0 @@
-@app.route('/cancel/<int:order_id>', methods=['POST'])
-@login_required
-def cancel_order(order_id):
-    order = Order.query.get(order_id)
-    order.status = 'cancelled'
-    order.cancel_fee = 0.5 * order.cake.price
-    db.session.commit()
-    return redirect(url_for('view_order', order_id=order.id))
-  
