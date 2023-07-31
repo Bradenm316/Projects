@@ -1,8 +1,11 @@
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'database'  # Replace with your database URL
+db = SQLAlchemy(app)
 
-class Cake(db.Model):
+class Cake(db.model):
     """
     Represents the 'cake' table in the database.
 
@@ -20,21 +23,21 @@ class Cake(db.Model):
     frosting = db.Column(db.String(100), nullable=False)
     decoration = db.Column(db.String(100), nullable=False)
   
-class Customer(db.Model):
+class Customer(db.model):
     __tablename__ = 'customers'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref='customer')
     orders = db.relationship('Order', backref='customer', lazy='dynamic')
 
-class Employee(db.Model):
+class Employee(db.model):
     __tablename__ = 'employees'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref='employee')
     orders = db.relationship('Order', backref='employee', lazy='dynamic')
 
-class Order(db.Model):
+class Order(db.model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
@@ -43,7 +46,7 @@ class Order(db.Model):
     status = db.Column(db.String(64), nullable=False)
     cancel_fee = db.Column(db.Float)
 
-class User(db.Model):
+class User(db.model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), nullable=False, unique=True)
@@ -60,3 +63,6 @@ class User(db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+if __name__ == '__main__':
+    app.run()
