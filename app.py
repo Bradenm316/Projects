@@ -3,6 +3,7 @@
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
 from flask import Flask, render_template, request
+from models import Cake, Customer, Employee, Order, User
 from core.session import Sessions
 
 app = Flask(__name__)
@@ -174,6 +175,48 @@ def checkout():
     user_session.submit_cart()
 
     return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
+
+@app.route('/orders/<int:order_id>/update', methods=['GET', 'POST'])
+def update_order(order_id):
+     order = Order.query.get(order_id)
+     if request.method == 'POST':
+         if 'status' in request.form:
+             order.status = request.form['status']
+         if 'cancel_fee' in request.form:
+             order.cancel_fee = float(request.form['cancel_fee'])
+         db.session.commit()
+         return redirect(url_for('view_order', order_id=order.id))
+     return render_template('update_order.html', order=order)
+
+@app.route('/orders', methods=['GET', 'POST'])
+def create_order():
+    if request.method == 'POST':
+        customer_id = request.form['customer_id']
+        employee_id = request.form['employee_id']
+        cake_id = request.form['cake_id']
+        order = Order(customer_id=customer_id, employee_id=employee_id, cake_id=cake_id, status='pending')
+        db.session.add(order)
+        db.session.commit()
+        return redirect(url_for('view_order', order_id=order.id))
+    customers = Customer.query.all()
+    employees = Employee.query.all()
+    cakes = Cake.query.all()
+    return render_template('create_order.html', customers=customers, employees=employees, cakes=cakes)
+
+@app.route('/cakes', methods=['GET', 'POST'])
+def create_cake():
+    if request.method == 'POST':
+        flavor = request.form['flavor']
+        size = request.form['size']
+        frosting = request.form['frosting']
+        decoration = request.form['decoration']
+        cake = Cake(flavor=flavor, size=size, frosting=frosting, decoration=decoration)
+        db.session.add(cake)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('design_cake.html')
+
+
 
 
 if __name__ == '__main__':
