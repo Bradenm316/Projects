@@ -4,10 +4,6 @@ from authentication.auth_tools import login_pipeline, update_passwords, hash_pas
 from database.db import Database
 from model import Cake, Customer, Employee, Order
 from flask import Flask, redirect, render_template, request, url_for
-<<<<<<< HEAD
-=======
-from model import Cake, Customer, Employee, Order
->>>>>>> origin
 from core.session import Sessions
 
 app = Flask(__name__)
