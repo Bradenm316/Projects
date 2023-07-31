@@ -3,7 +3,7 @@
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
 from flask import Flask, redirect, render_template, request, url_for
-from model import Cake, Customer, Employee, Order
+from database import Cake, Customer, Employee, Order
 from core.session import Sessions
 
 app = Flask(__name__)
