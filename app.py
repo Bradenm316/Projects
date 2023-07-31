@@ -2,7 +2,6 @@
 
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
-from database.model import Cake, Customer, Employee, Order
 from flask import Flask, redirect, render_template, request, url_for
 from core.session import Sessions
 
@@ -175,18 +174,6 @@ def checkout():
     user_session.submit_cart()
 
     return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
-
-@app.route('/orders/<int:order_id>/update', methods=['GET', 'POST'])
-def update_order(order_id):
-     order = Order.query.get(order_id)
-     if request.method == 'POST':
-         if 'status' in request.form:
-             order.status = request.form['status']
-         if 'cancel_fee' in request.form:
-             order.cancel_fee = float(request.form['cancel_fee'])
-         db.session.commit()
-         return redirect(url_for('view_order', order_id=order.id))
-     return render_template('update_order.html', order=order)
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
