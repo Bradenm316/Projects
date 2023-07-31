@@ -42,7 +42,6 @@ def login_page():
     """
     return render_template('login.html')
 
-
 @app.route('/home', methods=['POST'])
 def login():
     """
@@ -107,6 +106,28 @@ def register():
     db.insert_user(username, key, email, first_name, last_name)
     return render_template('index.html')
 
+@app.route('/shopping_cart', methods=['POST'])
+def add_product_to_cart():
+
+    order = {}
+    user_session = sessions.get_session(username)
+    for item in products:
+     if request.form.get(str(item['id'])):
+        count = int(request.form[str(item['id'])])
+        if count > 0:
+            cost = count * item['price']
+            order[item['item_name']] = {'count': count, 'cost': cost, 'image_url': item['image_url']}
+            user_session.add_new_item(
+                item['id'], item['item_name'], item['price'], count)
+        else:
+            order.pop(item['item_name'], None)
+            user_session.remove_item(item['id'])
+            user_session.add_new_item(item['id'], item['item_name'], 0, 0)
+
+    user_session.submit_cart()
+
+    return render_template('shopping_cart.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
+
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
@@ -122,15 +143,33 @@ def checkout():
     modifies:
         - sessions: adds items to the user's cart
     """
+    # order = {}
+    # user_session = sessions.get_session(username)
+    # for item in products:
+    #     print(f"item ID: {item['id']}")
+    #     if request.form[str(item['id'])] > '0':
+    #         count = request.form[str(item['id'])]
+    #         order[item['item_name']] = count
+    #         user_session.add_new_item(
+    #             item['id'], item['item_name'], item['price'], count)
+
+    # user_session.submit_cart()
+
+    # return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
     order = {}
     user_session = sessions.get_session(username)
     for item in products:
-        print(f"item ID: {item['id']}")
-        if request.form[str(item['id'])] > '0':
-            count = request.form[str(item['id'])]
-            order[item['item_name']] = count
+     if request.form.get(str(item['id'])):
+        count = int(request.form[str(item['id'])])
+        if count > 0:
+            cost = count * item['price']
+            order[item['item_name']] = {'count': count, 'cost': cost, 'image_url': item['image_url']}
             user_session.add_new_item(
                 item['id'], item['item_name'], item['price'], count)
+        else:
+            order.pop(item['item_name'], None)
+            user_session.remove_item(item['id'])
+            user_session.add_new_item(item['id'], item['item_name'], 0, 0)
 
     user_session.submit_cart()
 
