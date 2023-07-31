@@ -32,6 +32,15 @@ VALUES ('Chocolate Fudge', 'Thick layer of chocolate cake surrounding a melted c
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
 VALUES ('Red velvet', 'Consists of layers of cheesecake with red velvet flavor', 40.99, 12, 'static/image/red_valvet_cheesecake.jpeg', 'cake'); 
 
+INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
+VALUES ('Lemon cake', 'vanille cake layer with lush lemon cream cheese icing', 30.99, 45, 'static/images/mango.jpeg', 'cake');
+
+INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
+VALUES ('Snickers', 'chocolate cake layer with sweet peanut, caramel, and nougat', 49.99, 10, 'static/images/mango.jpeg', 'cake');
+
+INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
+VALUES ('Strawberry Passion', 'Layers of moist Red Velvet Cake, Strawberry Puree and Strawberry Ice Cream with Graham Cracker Pie Crust wrapped in fluffy Strawberry Frosting', 60.49, 100, 'static/images/mango.jpeg', 'cake');
+
 -- INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
 -- VALUES ();
 
