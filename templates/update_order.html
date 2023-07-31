@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Order</title>
+</head>
+<body>
+    <h1>Update Order</h1>
+    <form method="POST">
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <!-- Add other status options as needed -->
+        </select>
+        <br>
+        <label for="cancel_fee">Cancel Fee:</label>
+        <input type="text" name="cancel_fee" id="cancel_fee">
+        <br>
+        <input type="submit" value="Update">
+    </form>
+</body>
+</html>
