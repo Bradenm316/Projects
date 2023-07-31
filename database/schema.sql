@@ -27,4 +27,10 @@ CREATE TABLE sales (
     FOREIGN KEY (username) REFERENCES users(username),
     FOREIGN KEY (item_id) REFERENCES inventory(id)
 );
+CREATE TABLE cake (
+    id INTEGER PRIMARY KEY,
+    flavor VARCHAR(100) NOT NULL,
+    topping VARCHAR(100) NOT NULL,
+    filling VARCHAR(100) NOT NULL
+);
 

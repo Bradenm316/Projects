@@ -4,6 +4,7 @@ from authentication.auth_tools import login_pipeline, update_passwords, hash_pas
 from database.db import Database
 from flask import Flask, redirect, render_template, request, url_for
 from core.session import Sessions
+from cake import Cake
 
 app = Flask(__name__)
 HOST, PORT = 'localhost', 8080
@@ -13,6 +14,14 @@ db = Database('database/store_records.db')
 products = db.get_full_inventory()
 sessions = Sessions()
 sessions.add_new_session(username, db)
+
+# Available flavors, toppings, and fillings
+available_flavors = ["Chocolate", "Vanilla", "Strawberry"]
+available_toppings = ["Sprinkles", "Chocolate Chips", "Fruit"]
+available_fillings = ["Strawberry Jam", "Chocolate Ganache", "Cream Cheese"]
+
+# Create an instance of the Cake class to store customer selections
+customer_cake = Cake()
 
 
 @app.route('/')
@@ -174,6 +183,25 @@ def checkout():
     user_session.submit_cart()
 
     return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
+
+@app.route('/')
+def index():
+    return render_template('index.html', flavors=available_flavors, toppings=available_toppings, fillings=available_fillings)
+
+@app.route('/customize', methods=['POST'])
+def customize():
+    selected_flavors = request.form.getlist('flavors')
+    selected_toppings = request.form.getlist('toppings')
+    selected_fillings = request.form.getlist('fillings')
+
+    for flavor in selected_flavors:
+        customer_cake.add_flavor(flavor)
+    for topping in selected_toppings:
+        customer_cake.add_topping(topping)
+    for filling in selected_fillings:
+        customer_cake.add_filling(filling)
+
+    return render_template('customize.html', cake=customer_cake)
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
