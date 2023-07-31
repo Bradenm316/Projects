@@ -44,7 +44,3 @@ class Order(db.Model):
     cake_id = db.Column(db.Integer, db.ForeignKey('cakes.id'))
     status = db.Column(db.String(64), nullable=False)
     cancel_fee = db.Column(db.Float)
-
-
-if __name__ == '__main__':
-    app.run()
