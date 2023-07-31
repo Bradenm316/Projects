@@ -28,3 +28,12 @@ CREATE TABLE sales (
     FOREIGN KEY (item_id) REFERENCES inventory(id)
 );
 
+-- CREATE TABLE cakes (
+--   cake_id INT PRIMARY KEY AUTOINCREMENT,
+--   cake_name VARCHAR(100) NOT NULL,
+--   base_flavor VARCHAR(50) NOT NULL,
+--   frosting_flavor VARCHAR(50) NOT NULL,
+--   filling_flavor VARCHAR(50) NOT NULL,
+--   price DECIMAL(10, 2) NOT NULL
+-- );
+

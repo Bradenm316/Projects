@@ -1,0 +1,7 @@
+@startuml
+actor BusinessOwner
+BusinessOwner -> System: create different cakes design
+BusinessOwner -> System: upload designing tools
+System -> System: display all stores designing tools
+BusinessOwner -> System: save work
+@enduml

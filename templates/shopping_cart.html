@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row" id="products_page">
+    <div class="col-md-12">
+        <h3>Shopping Cart</h3>
+        <hr>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item, details in order.items() %}
+                    <tr>
+                        <td>{{ item }}</td>
+                        <td>{{ details['count'] }}</td>
+                        <td>${{ details['cost'] }}</td>
+                        <td><img src="{{ details.image_url }}" class="product_card-img" style="float: left;"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-12" id="index_buttons">
+                <button onclick="history.go(-1)" class="btn btn-primary" id="continue_shopping_button">Continue Shopping</button>
+            </div>
+        </div>
+
+        <form action="/checkout" method="post">
+            <div class="row">
+                <div class="col-md-12" id="index_buttons">
+                    <button type="submit" class="btn btn-primary" id="checkout_button">Checkout</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
