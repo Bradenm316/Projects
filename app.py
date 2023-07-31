@@ -3,7 +3,7 @@
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
 from flask import Flask, render_template, request
-from models import Cake, Customer, Employee, Order, User
+from flask import Cake, Customer, Employee, Order, User
 from core.session import Sessions
 
 app = Flask(__name__)
@@ -184,7 +184,7 @@ def update_order(order_id):
              order.status = request.form['status']
          if 'cancel_fee' in request.form:
              order.cancel_fee = float(request.form['cancel_fee'])
-         db.session.commit()
+         user_session.commit()
          return redirect(url_for('view_order', order_id=order.id))
      return render_template('update_order.html', order=order)
 
@@ -195,8 +195,8 @@ def create_order():
         employee_id = request.form['employee_id']
         cake_id = request.form['cake_id']
         order = Order(customer_id=customer_id, employee_id=employee_id, cake_id=cake_id, status='pending')
-        db.session.add(order)
-        db.session.commit()
+        user_session.add(order)
+        user_session.commit()
         return redirect(url_for('view_order', order_id=order.id))
     customers = Customer.query.all()
     employees = Employee.query.all()
@@ -211,8 +211,8 @@ def create_cake():
         frosting = request.form['frosting']
         decoration = request.form['decoration']
         cake = Cake(flavor=flavor, size=size, frosting=frosting, decoration=decoration)
-        db.session.add(cake)
-        db.session.commit()
+        user_session.add(cake)
+        user_session.commit()
         return redirect(url_for('index'))
     return render_template('design_cake.html')
 
