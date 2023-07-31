@@ -29,7 +29,7 @@ CREATE TABLE sales (
 );
 
 CREATE TABLE cakes (
-    cake_id INT PRIMARY KEY AUTOINCREMENT,
+    cake_id INTEGER PRIMARY KEY AUTOINCREMENT,
     cake_name VARCHAR(100) NOT NULL,
     base_flavor VARCHAR(50) NOT NULL,
     frosting_flavor VARCHAR(50) NOT NULL,
