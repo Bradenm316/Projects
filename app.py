@@ -2,7 +2,7 @@
 
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
-from model import Cake, Customer, Employee, Order
+from database.model import Cake, Customer, Employee, Order
 from flask import Flask, redirect, render_template, request, url_for
 from core.session import Sessions
 
@@ -187,34 +187,6 @@ def update_order(order_id):
          db.session.commit()
          return redirect(url_for('view_order', order_id=order.id))
      return render_template('update_order.html', order=order)
-
-@app.route('/orders', methods=['GET', 'POST'])
-def create_order():
-    if request.method == 'POST':
-        customer_id = request.form['customer_id']
-        employee_id = request.form['employee_id']
-        cake_id = request.form['cake_id']
-        order = Order(customer_id=customer_id, employee_id=employee_id, cake_id=cake_id, status='pending')
-        db.ession.add(order)
-        db.session.commit()
-        return redirect(url_for('view_order', order_id=order.id))
-    customers = Customer.query.all()
-    employees = Employee.query.all()
-    cakes = Cake.query.all()
-    return render_template('create_order.html', customers=customers, employees=employees, cakes=cakes)
-
-@app.route('/cakes', methods=['GET', 'POST'])
-def design_cake():
-    if request.method == 'POST':
-        flavor = request.form['flavor']
-        size = request.form['size']
-        frosting = request.form['frosting']
-        decoration = request.form['decoration']
-        cake = Cake(flavor=flavor, size=size, frosting=frosting, decoration=decoration)
-        db.session.add(cake)
-        db.session.commit()
-        return redirect(url_for('index'))
-    return render_template('design_cake.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)

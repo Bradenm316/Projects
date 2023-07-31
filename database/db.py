@@ -1,9 +1,6 @@
 from core.utils import dict_factory, calculate_cost
 import datetime as dt
 import sqlite3
-from model import Cake, Employee, Order
-
-
 class Database:
     """
     A class that handles all database operations.
@@ -720,3 +717,4 @@ class Database:
         self.cursor.execute(
             "UPDATE sales SET cost = ? WHERE id = ?", (new_cost, sale_id))
         self.connection.commit()
+    
