@@ -1,11 +1,10 @@
-from flask import Flask
+# model.py
+
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'db'
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
-class Cake(db.model):
+class Cake(db.Model):
     """
     Represents the 'cake' table in the database.
 
@@ -23,21 +22,21 @@ class Cake(db.model):
     frosting = db.Column(db.String(100), nullable=False)
     decoration = db.Column(db.String(100), nullable=False)
   
-class Customer(db.model):
+class Customer(db.Model):
     __tablename__ = 'customers'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref='customer')
     orders = db.relationship('Order', backref='customer', lazy='dynamic')
 
-class Employee(db.model):
+class Employee(db.Model):
     __tablename__ = 'employees'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref='employee')
     orders = db.relationship('Order', backref='employee', lazy='dynamic')
 
-class Order(db.model):
+class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
