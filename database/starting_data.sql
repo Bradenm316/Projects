@@ -30,7 +30,7 @@ INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `ca
 VALUES ('Chocolate Fudge', 'Thick layer of chocolate cake surrounding a melted chocolate inside', 36.99, 10, 'static/images/chocolate_fudge.jpeg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, price`, `stock`, image_url`, `category`)
-VALUES (`Red Valvet`, `Consists of cheese fill-in`, 55.99, 12, 'static/image/red_valvet.jpeg', 'cake'); 
+VALUES (`Red Valvet cheesecake`, `Consists of layers of cheesecake with red velvet flavor`, 40.99, 12, 'static/image/red_valvet_cheesecake.jpeg', 'cake'); 
 
 -- INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
 -- VALUES ();
