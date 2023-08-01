@@ -181,11 +181,6 @@ def checkout():
 
     return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
 
-# Add these import statements at the top of your app.py file
-from flask import jsonify
-
-# ... (your existing code)
-
 # Create a new route for virtual customization
 @app.route('/customize', methods=['GET'])
 def customize_cake():
@@ -221,12 +216,6 @@ def process_customization():
         'filling': selected_filling
     }
     return jsonify(custom_cake_details)
-
-# ... (your existing code)
-
-if __name__ == '__main__':
-    app.run(host=HOST, port=PORT)
-
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
