@@ -215,7 +215,7 @@ def process_customization():
         'topping': selected_topping,
         'filling': selected_filling
     }
-    return jsonify(custom_cake_details)
+    return render_template('customize.html', flavors=available_flavors, toppings=available_toppings, fillings=available_fillings)
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
