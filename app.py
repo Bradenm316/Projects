@@ -4,7 +4,7 @@ from authentication.auth_tools import login_pipeline, update_passwords, hash_pas
 from database.db import Database
 from flask import Flask, redirect, render_template, request, url_for
 from core.session import Sessions
-from cake import Cake
+from flask import jsonify
 
 app = Flask(__name__)
 HOST, PORT = 'localhost', 8080
@@ -19,9 +19,6 @@ sessions.add_new_session(username, db)
 available_flavors = ["Chocolate", "Vanilla", "Strawberry"]
 available_toppings = ["Sprinkles", "Chocolate Chips", "Fruit"]
 available_fillings = ["Strawberry Jam", "Chocolate Ganache", "Cream Cheese"]
-
-# Create an instance of the Cake class to store customer selections
-customer_cake = Cake()
 
 
 @app.route('/')
@@ -184,24 +181,52 @@ def checkout():
 
     return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
 
-@app.route('/')
-def index():
-    return render_template('index.html', flavors=available_flavors, toppings=available_toppings, fillings=available_fillings)
+# Add these import statements at the top of your app.py file
+from flask import jsonify
 
+# ... (your existing code)
+
+# Create a new route for virtual customization
+@app.route('/customize', methods=['GET'])
+def customize_cake():
+    """
+    Renders the customize cake page when the user is at the `/customize` endpoint.
+
+    args:
+        - None
+
+    returns:
+        - None
+    """
+    return render_template('customize.html', flavors=available_flavors, toppings=available_toppings, fillings=available_fillings)
+
+# Create a new route to handle the form submission for cake customization
 @app.route('/customize', methods=['POST'])
-def customize():
-    selected_flavors = request.form.getlist('flavors')
-    selected_toppings = request.form.getlist('toppings')
-    selected_fillings = request.form.getlist('fillings')
+def process_customization():
+    """
+    Processes the customization form when the user submits the form.
 
-    for flavor in selected_flavors:
-        customer_cake.add_flavor(flavor)
-    for topping in selected_toppings:
-        customer_cake.add_topping(topping)
-    for filling in selected_fillings:
-        customer_cake.add_filling(filling)
+    args:
+        - None
 
-    return render_template('customize.html', cake=customer_cake)
+    returns:
+        - JSON response containing the selected cake customization details.
+    """
+    selected_flavor = request.form['flavor']
+    selected_topping = request.form['topping']
+    selected_filling = request.form['filling']
+    custom_cake_details = {
+        'flavor': selected_flavor,
+        'topping': selected_topping,
+        'filling': selected_filling
+    }
+    return jsonify(custom_cake_details)
+
+# ... (your existing code)
+
+if __name__ == '__main__':
+    app.run(host=HOST, port=PORT)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
