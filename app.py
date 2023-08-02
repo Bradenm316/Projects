@@ -124,9 +124,32 @@ def add_product_to_cart():
         count = int(request.form[str(item['id'])])
         if count > 0:
             cost = count * item['price']
-            order[item['item_name']] = {'count': count, 'cost': cost, 'image_url': item['image_url']}
+            customization_cost = 0
+            if(request.form.get("flavor-" + str(item['id']))):
+                customization_cost = 0
+                flavor = request.form.get("flavor-" + str(item['id']))
+                if(flavor != "Vanilla"):
+                    customization_cost = 10
+                cost += customization_cost * count
+            if(request.form.get("toppings-" + str(item['id']))):
+                customization_cost = 0
+                flavor = request.form.get("toppings-" + str(item['id']))
+                if(flavor != "Sprinkles"):
+                    customization_cost = 5
+                cost += customization_cost * count
+            if(request.form.get("fillings-" + str(item['id']))):
+                customization_cost = 0
+                flavor = request.form.get("fillings-" + str(item['id']))
+                if(flavor == "Strawberry Jam"):
+                    customization_cost = 20
+                if(flavor == "Chocolate Ganache"):
+                    customization_cost = 20 
+                if(flavor == "Cream Cheese"):
+                    customization_cost = 20
+                cost += customization_cost * count
+            order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url']}
             user_session.add_new_item(
-                item['id'], item['item_name'], item['price'], count)
+                item['id'], item['item_name'], round(cost,2), count)
         else:
             order.pop(item['item_name'], None)
             user_session.remove_item(item['id'])
@@ -164,24 +187,27 @@ def checkout():
     # user_session.submit_cart()
 
     # return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
-    order = {}
+    # order = {}
     user_session = sessions.get_session(username)
-    for item in products:
-     if request.form.get(str(item['id'])):
-        count = int(request.form[str(item['id'])])
-        if count > 0:
-            cost = (count * item['price']) #see which checkbox inputs are selected and add extra cost accordingly
-            order[item['item_name']] = {'count': count, 'cost': cost, 'image_url': item['image_url']}
-            user_session.add_new_item(
-                item['id'], item['item_name'], item['price'], count)
-        else:
-            order.pop(item['item_name'], None)
-            user_session.remove_item(item['id'])
-            user_session.add_new_item(item['id'], item['item_name'], 0, 0)
-    user_session.total_cost += CUSTOMIZATION_COST
-    user_session.submit_cart()
-
-    return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
+    # for item in products:
+    #  if request.form.get(str(item['id'])):
+    #     count = int(request.form[str(item['id'])])
+    #     if count > 0:
+    #         cost = (count * item['price']) #see which checkbox inputs are selected and add extra cost accordingly
+    #         if(request.form.get("flavor-" + str(item['id']))):
+    #             flavor = request.form.get("flavor-" + str(item['id']))
+    #             if(flavor != "Vanilla"):
+    #                 cost += 20 * count
+    #         order[item['item_name']] = {'count': count, 'cost': cost, 'image_url': item['image_url']}
+    #         user_session.add_new_item(
+    #             item['id'], item['item_name'], item['price'], count)
+    #     else:
+    #         order.pop(item['item_name'], None)
+    #         user_session.remove_item(item['id'])
+    #         user_session.add_new_item(item['id'], item['item_name'], 0, 0)
+    # user_session.submit_cart()
+    
+    return render_template('checkout.html', total_cost=user_session.total_cost)
 
 # Create a new route for virtual customization
 @app.route('/customize', methods=['GET'])

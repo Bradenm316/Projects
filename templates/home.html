@@ -22,8 +22,33 @@
                                     <label for="quantity">Quantity:</label> 
                                     <input type="number" class="quantity" id={{product.id}} name={{product.id}} min="0" max="10" value="0">
 
-                                    <label for="flavor">Flavor:</label>
-                                    <input type="radio" id="{{ 'flavor-' ~ product.id }}">
+                                    <div class="product_card-buttons">
+                                        <h6 class="product_card-button-header">Cake Flavors</h6>
+                                        <input type="radio" id="{{ 'flavor-' ~ product.id }}" name="{{ 'flavor-' ~ product.id }}" value="Chocolate">
+                                        <label for="{{ 'flavor-' ~ product.id }}">Chocolate</label>
+                                        <input type="radio" id="{{ 'flavor-' ~ product.id }}" name="{{ 'flavor-' ~ product.id }}" value="Vanilla">
+                                        <label for="{{ 'flavor-' ~ product.id }}">Vanilla</label>
+                                        <input type="radio" id="{{ 'flavor-' ~ product.id }}" name="{{ 'flavor-' ~ product.id }}" value="Strawberry">
+                                        <label for="{{ 'flavor-' ~ product.id }}">Strawberry</label>
+
+                                        <h6 class="product_card-button-header">Toppings</h6>
+                                        <input type="radio" id="{{ 'toppings-' ~ product.id }}" name="{{ 'toppings-' ~ product.id }}" value="Sprinkles">
+                                        <label for="{{ 'toppings-' ~ product.id }}">Sprinkles</label>
+                                        <input type="radio" id="{{ 'toppings-' ~ product.id }}" name="{{ 'toppings-' ~ product.id }}" value="Chocolate Chips">
+                                        <label for="{{ 'toppings-' ~ product.id }}">Chocolate Chips</label>
+                                        <input type="radio" id="{{ 'toppings-' ~ product.id }}" name="{{ 'toppings-' ~ product.id }}" value="Fruit">
+                                        <label for="{{ 'toppings-' ~ product.id }}">Fruit</label>
+
+                                        <h6 class="product_card-button-header">Fillings</h6>
+                                        <input type="radio" id="{{ 'fillings-' ~ product.id }}" name="{{ 'fillings-' ~ product.id }}" value="Strawberry Jam">
+                                        <label for="{{ 'fillings-' ~ product.id }}">Strawberry Jam</label>
+                                        <input type="radio" id="{{ 'fillings-' ~ product.id }}" name="{{ 'fillings-' ~ product.id }}" value="Chocolate Ganache">
+                                        <label for="{{ 'fillings-' ~ product.id }}">Chocolate Ganache</label>
+                                        <input type="radio" id="{{ 'fillings-' ~ product.id }}" name="{{ 'fillings-' ~ product.id }}" value="Cream Cheese">
+                                        <label for="{{ 'fillings-' ~ product.id }}">Cream Cheese</label>
+                                    </div>
+                                    
+
                                 </div>
                             </div>
                         </div>
