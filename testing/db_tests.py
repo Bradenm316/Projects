@@ -132,3 +132,187 @@ def test_cookies_and_cream_info(db: Database = None) -> tuple:
         return False, error
     else:
         return True, "Descriptions match."
+    
+def test_pink_vanilla_dream_info(db: Database = None) -> tuple:
+    """
+    Tests that database description matches expected.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string, 
+          where the boolean is True if the test passed and False if it failed, 
+          and the string is the error report.
+    """
+
+    db = Database("database/store_records.db") if db is None else db
+    full_inventory = db.get_full_inventory()
+    actual =[info for info in full_inventory if info['item_name']=='Pink Vanilla Dream'][0]
+    expected = 'Six layers of vanilla cake iced in soft pink buttercream icing. Garnished with raspberry macarons, vanilla wafers, meringues, and white icing drip.'
+    if actual != expected:
+        error = f"Error in test_pink_vanilla_dream_info: description does not match expected value.\n  - Actual: {actual}"
+        return False, error
+    else:
+        return True, "Descriptions match."
+    
+def test_cheesecake_info(db: Database = None) -> tuple:
+    """
+    Tests that database description matches expected.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string, 
+          where the boolean is True if the test passed and False if it failed, 
+          and the string is the error report.
+    """
+
+    db = Database("database/store_records.db") if db is None else db
+    full_inventory = db.get_full_inventory()
+    actual =[info for info in full_inventory if info['item_name']=='Cheesecake'][0]
+    expected = 'Consists of a thick, creamy filling over a thinner crust'
+    if actual != expected:
+        error = f"Error in test_cheesecake_info: description does not match expected value.\n  - Actual: {actual}"
+        return False, error
+    else:
+        return True, "Descriptions match."
+
+def test_tiramisu_info(db: Database = None) -> tuple:
+    """
+    Tests that database description matches expected.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string, 
+          where the boolean is True if the test passed and False if it failed, 
+          and the string is the error report.
+    """
+
+    db = Database("database/store_records.db") if db is None else db
+    full_inventory = db.get_full_inventory()
+    actual =[info for info in full_inventory if info['item_name']=='Tiramisu'][0]
+    expected = 'Consists of layers of sponge cake soaked in coffee and brandy or liqueur with powdered chocolate and mascarpone cheese'
+    if actual != expected:
+        error = f"Error in test_tiramisu_info: description does not match expected value.\n  - Actual: {actual}"
+        return False, error
+    else:
+        return True, "Descriptions match."
+    
+def test_chocolate_fudge_info(db: Database = None) -> tuple:
+    """
+    Tests that database description matches expected.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string, 
+          where the boolean is True if the test passed and False if it failed, 
+          and the string is the error report.
+    """
+
+    db = Database("database/store_records.db") if db is None else db
+    full_inventory = db.get_full_inventory()
+    actual =[info for info in full_inventory if info['item_name']=='Chocolate Fudge'][0]
+    expected = 'Thick layer of chocolate cake surrounding a melted chocolate inside'
+    if actual != expected:
+        error = f"Error in test_chocolate_fudge_info: description does not match expected value.\n  - Actual: {actual}"
+        return False, error
+    else:
+        return True, "Descriptions match."
+    
+def test_red_velvet_info(db: Database = None) -> tuple:
+    """
+    Tests that database description matches expected.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string, 
+          where the boolean is True if the test passed and False if it failed, 
+          and the string is the error report.
+    """
+
+    db = Database("database/store_records.db") if db is None else db
+    full_inventory = db.get_full_inventory()
+    actual =[info for info in full_inventory if info['item_name']=='Red Velvet'][0]
+    expected = 'Consists of layers of cheesecake with red velvet flavor'
+    if actual != expected:
+        error = f"Error in test_red_velvet_info: description does not match expected value.\n  - Actual: {actual}"
+        return False, error
+    else:
+        return True, "Descriptions match."
+    
+def test_lemon_cake_info(db: Database = None) -> tuple:
+    """
+    Tests that database description matches expected.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string, 
+          where the boolean is True if the test passed and False if it failed, 
+          and the string is the error report.
+    """
+
+    db = Database("database/store_records.db") if db is None else db
+    full_inventory = db.get_full_inventory()
+    actual =[info for info in full_inventory if info['item_name']=='Lemon Cake'][0]
+    expected = 'Vanilla cake layer with lush lemon cream cheese icing'
+    if actual != expected:
+        error = f"Error in test_lemon_cake_info: description does not match expected value.\n  - Actual: {actual}"
+        return False, error
+    else:
+        return True, "Descriptions match."
+    
+def test_snickers_info(db: Database = None) -> tuple:
+    """
+    Tests that database description matches expected.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string, 
+          where the boolean is True if the test passed and False if it failed, 
+          and the string is the error report.
+    """
+
+    db = Database("database/store_records.db") if db is None else db
+    full_inventory = db.get_full_inventory()
+    actual =[info for info in full_inventory if info['item_name']=='Snickers'][0]
+    expected = 'chocolate cake layer with sweet peanut, caramel, and nougat'
+    if actual != expected:
+        error = f"Error in test_snickers_info: description does not match expected value.\n  - Actual: {actual}"
+        return False, error
+    else:
+        return True, "Descriptions match."
+    
+def test_strawberry_passion_info(db: Database = None) -> tuple:
+    """
+    Tests that database description matches expected.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string, 
+          where the boolean is True if the test passed and False if it failed, 
+          and the string is the error report.
+    """
+
+    db = Database("database/store_records.db") if db is None else db
+    full_inventory = db.get_full_inventory()
+    actual =[info for info in full_inventory if info['item_name']=='Strawberry Passion'][0]
+    expected = 'Layers of moist Red Velvet Cake, Strawberry Puree and Strawberry Ice Cream with Graham Cracker Pie Crust wrapped in fluffy Strawberry Frosting'
+    if actual != expected:
+        error = f"Error in test_strawberry_passion_info: description does not match expected value.\n  - Actual: {actual}"
+        return False, error
+    else:
+        return True, "Descriptions match."
