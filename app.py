@@ -9,11 +9,13 @@ from flask import jsonify
 app = Flask(__name__)
 HOST, PORT = 'localhost', 8080
 global username, products, db, sessions
+CUSTOMIZATION_COST = 0
 username = 'default'
 db = Database('database/store_records.db')
 products = db.get_full_inventory()
 sessions = Sessions()
 sessions.add_new_session(username, db)
+
 
 # Available flavors, toppings, and fillings
 available_flavors = ["Chocolate", "Vanilla", "Strawberry"]
@@ -168,7 +170,7 @@ def checkout():
      if request.form.get(str(item['id'])):
         count = int(request.form[str(item['id'])])
         if count > 0:
-            cost = count * item['price']
+            cost = (count * item['price']) #see which checkbox inputs are selected and add extra cost accordingly
             order[item['item_name']] = {'count': count, 'cost': cost, 'image_url': item['image_url']}
             user_session.add_new_item(
                 item['id'], item['item_name'], item['price'], count)
@@ -176,7 +178,7 @@ def checkout():
             order.pop(item['item_name'], None)
             user_session.remove_item(item['id'])
             user_session.add_new_item(item['id'], item['item_name'], 0, 0)
-
+    user_session.total_cost += CUSTOMIZATION_COST
     user_session.submit_cart()
 
     return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
@@ -210,12 +212,19 @@ def process_customization():
     selected_flavor = request.form['flavor']
     selected_topping = request.form['topping']
     selected_filling = request.form['filling']
-    custom_cake_details = {
-        'flavor': selected_flavor,
-        'topping': selected_topping,
-        'filling': selected_filling
-    }
-    return render_template('customize.html', flavors=available_flavors, toppings=available_toppings, fillings=available_fillings)
+    
+    cost = 0
+    global CUSTOMIZATION_COST
+    
+    if selected_flavor == "Chocolate":
+        cost += 10
+    elif selected_flavor == "Vanilla":
+        cost += 10
+    elif selected_flavor == "Strawberry":
+        cost += 10
+    #add for toppings and fillings later
+    CUSTOMIZATION_COST += cost
+    return redirect('/home')
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
