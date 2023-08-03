@@ -14,6 +14,7 @@ db = Database('database/store_records.db')
 products = db.get_full_inventory()
 sessions = Sessions()
 sessions.add_new_session(username, db)
+owners =[]
 
 @app.route('/')
 def index_page():
@@ -125,6 +126,17 @@ def register():
     update_passwords(username, key, salt)
     db.insert_user(username, key, email, first_name, last_name)
     return render_template('index.html')
+
+@app.route('/owner_register', methods=['GET', 'POST'])
+def owner_register():
+    if request.method == 'POST':
+        owner_username = request.form['username']
+        owner_password = request.form['password']
+        owners.append({'username': owner_username, 'password': owner_password})
+        return redirect(url_for('owner_dashboard'))
+
+    return render_template('owner_register.html')
+
 
 @app.route('/shopping_cart', methods=['POST'])
 def add_product_to_cart():
