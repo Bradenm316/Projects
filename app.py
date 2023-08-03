@@ -15,7 +15,6 @@ products = db.get_full_inventory()
 sessions = Sessions()
 sessions.add_new_session(username, db)
 owners =[]
-PREDEFINED_SECURITY_CODE = "ITSC_3155"
 
 
 @app.route('/')
@@ -131,24 +130,26 @@ def register():
 
 @app.route('/owner_register', methods=['GET', 'POST'])
 def owner_register():
+    error_message = None  # Initialize error_message
     if request.method == 'POST':
         owner_username = request.form['username']
         owner_password = request.form['password']
-        security_code = request.form['security_code'] 
-        predefined_security_code = 'your_predefined_security_code'
-        if security_code == predefined_security_code:
+        security_code = request.form['security_code']
+
+        if security_code != 'ITSC3155': 
+            error_message = "Sorry, wrong security code. You can't register as an owner."
+        else:
             email = request.form['email']
             first_name = request.form['first_name']
             last_name = request.form['last_name']
             salt, key = hash_password(owner_password)
-            update_passwords(owner_username, key, salt)
-            db.insert_user(owner_username, key, email, first_name, last_name)
+            update_passwords(username, key, salt)
+            db.insert_user(username, key, email, first_name, last_name)
 
             return redirect(url_for('owner_login'))
-        else:
-            error_message = "Sorry, wrong security code. You can't register as an owner."
 
     return render_template('owner_register.html', error_message=error_message)
+
 
 @app.route('/shopping_cart', methods=['POST'])
 def add_product_to_cart():
