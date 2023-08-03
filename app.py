@@ -89,8 +89,6 @@ def owner_login():
 def owner_dashboard():
     if not session.get('is_owner'):
         return redirect(url_for('owner_login'))
-    
-    # Get sales data from the database
     sales_data = db.get_full_sales_information()
     
     order_data = ["Order 1", "Order 2", "Order 3"]
