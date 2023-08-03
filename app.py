@@ -137,6 +137,17 @@ def owner_register():
 
     return render_template('owner_register.html')
 
+@app.route('/owner-dashboard')
+def owner_dashboard():
+    if not session.get('is_owner'):
+        return redirect(url_for('owner_login'))
+    
+    # Fetch owner-specific data (e.g., sales, orders) from the database
+    # Replace the example data with your actual data fetching logic
+    sales_data = []
+    order_data = []
+
+    return render_template('owner_dashboard.html', sales=sales_data, orders=order_data)
 
 @app.route('/shopping_cart', methods=['POST'])
 def add_product_to_cart():
