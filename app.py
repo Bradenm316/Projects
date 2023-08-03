@@ -2,7 +2,7 @@
 
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 from core.session import Sessions
 
 app = Flask(__name__)
@@ -66,6 +66,25 @@ def login():
         password_incorrect = True
         print(f"Incorrect username ({username}) or password ({password}).")
         return render_template('login.html', password_incorrect=password_incorrect)
+
+@app.route('/owner_login', methods=['GET', 'POST'])
+def owner_login():
+    if request.method == 'POST':
+        owner_username = request.form['username']
+        owner_password = request.form['password']
+        if owner_username == 'owner' and owner_password == 'password':
+            session['is_owner'] = True
+            return redirect(url_for('owner_dashboard'))
+    
+    return render_template('owner_login.html')
+@app.route('/owner-dashboard')
+def owner_dashboard():
+    if not session.get('is_owner'):
+        return redirect(url_for('owner_login'))
+    sales_data = []
+    order_data = []
+
+    return render_template('owner_dashboard.html', sales=sales_data, orders=order_data)
 
 @app.route('/register')
 def register_page():
