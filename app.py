@@ -74,20 +74,16 @@ def owner_login():
     if request.method == 'POST':
         owner_username = request.form['username']
         owner_password = request.form['password']
-        if owner_username == 'owner' and owner_password == 'password':
+        
+        # Check if the owner credentials and security code are correct
+        if (owner_username == 'owner' and owner_password == 'password'):
             session['is_owner'] = True
             return redirect(url_for('owner_dashboard'))
+        else:
+            error_message = "Invalid credentials"
+            return render_template('owner_login.html', error_message=error_message)
     
     return render_template('owner_login.html')
-
-@app.route('/owner-dashboard')
-def owner_dashboard():
-    if not session.get('is_owner'):
-        return redirect(url_for('owner_login'))
-    sales_data = ["Sale 1", "Sale 2", "Sale 3"]
-    order_data = ["Order 1", "Order 2", "Order 3"]
-
-    return render_template('owner_dashboard.html', sales=sales_data, orders=order_data)
 
 @app.route('/register')
 def register_page():
