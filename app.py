@@ -77,6 +77,7 @@ def owner_login():
             return redirect(url_for('owner_dashboard'))
     
     return render_template('owner_login.html')
+
 @app.route('/owner-dashboard')
 def owner_dashboard():
     if not session.get('is_owner'):
