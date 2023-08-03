@@ -83,8 +83,8 @@ def owner_login():
 def owner_dashboard():
     if not session.get('is_owner'):
         return redirect(url_for('owner_login'))
-    sales_data = []
-    order_data = []
+    sales_data = ["Sale 1", "Sale 2", "Sale 3"]
+    order_data = ["Order 1", "Order 2", "Order 3"]
 
     return render_template('owner_dashboard.html', sales=sales_data, orders=order_data)
 

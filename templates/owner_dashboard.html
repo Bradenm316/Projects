@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="row" id="owner_dashboard">
+<div class="row" id="owner_dashboard_page">
     <div class="col-md-12">
         <h3>Owner Dashboard</h3>
         <hr>
@@ -21,6 +21,11 @@
                     <li>{{ order }}</li>
                     {% endfor %}
                 </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/logout" class="btn btn-danger">Logout</a>
             </div>
         </div>
     </div>
