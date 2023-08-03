@@ -132,17 +132,21 @@ def owner_register():
     if request.method == 'POST':
         owner_username = request.form['username']
         owner_password = request.form['password']
-        
-        email = request.form['email']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        salt, key = hash_password(owner_password)
-        update_passwords(username, key, salt)
-        db.insert_user(username, key, email, first_name, last_name)
+        security_code = request.form['security_code'] 
+        predefined_security_code = 'your_predefined_security_code'
+        if security_code == predefined_security_code:
+            email = request.form['email']
+            first_name = request.form['first_name']
+            last_name = request.form['last_name']
+            salt, key = hash_password(owner_password)
+            update_passwords(owner_username, key, salt)
+            db.insert_user(owner_username, key, email, first_name, last_name)
 
-        return redirect(url_for('owner_login'))
-    
-    return render_template('owner_register.html')
+            return redirect(url_for('owner_login'))
+        else:
+            error_message = "Sorry, wrong security code. You can't register as an owner."
+
+    return render_template('owner_register.html', error_message=error_message)
 
 @app.route('/shopping_cart', methods=['POST'])
 def add_product_to_cart():
