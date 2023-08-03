@@ -5,7 +5,9 @@
     <div class="col-md-6">
         <h3>Owner Registration</h3>
         {% if error_message %}
-        <p class="text-danger">{{ error_message }}</p>
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
         {% endif %}
         <form action="/owner_register" method="POST">
             <div class="form-group" id="info_form_group">
@@ -15,6 +17,10 @@
             <div class="form-group" id="info_form_group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" class="form-control">
+            </div>
+            <div class="form-group" id="info_form_group">
+                <label for="security_code">Security Code</label>
+                <input type="password" name="security_code" id="security_code" class="form-control">
             </div>
             <div class="form-group" id="info_form_group">
                 <label for="email">Email</label>
@@ -27,10 +33,6 @@
             <div class="form-group" id="info_form_group">
                 <label for="last_name">Last Name</label>
                 <input type="text" name="last_name" id="last_name" class="form-control">
-            </div>
-            <div class="form-group" id="info_form_group">
-                <label for="security_code">Security Code</label>
-                <input type="text" name="security_code" id="security_code" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary" id="register_button">Register</button>
         </form>
