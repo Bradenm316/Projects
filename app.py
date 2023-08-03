@@ -132,13 +132,15 @@ def owner_register():
     if request.method == 'POST':
         owner_username = request.form['username']
         owner_password = request.form['password']
-
-        # Replace this with your owner registration logic
-        # For example, you can add the owner's username and hashed password to the database
+        
+        email = request.form['email']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
         salt, key = hash_password(owner_password)
-        db.insert_owner(owner_username, key, salt)
+        update_passwords(username, key, salt)
+        db.insert_user(username, key, email, first_name, last_name)
 
-        return redirect(url_for('owner_login'))  # Redirect to the owner login page after registration
+        return redirect(url_for('owner_login'))
     
     return render_template('owner_register.html')
 
