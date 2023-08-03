@@ -15,6 +15,8 @@ products = db.get_full_inventory()
 sessions = Sessions()
 sessions.add_new_session(username, db)
 owners =[]
+PREDEFINED_SECURITY_CODE = "ITSC_3155"
+
 
 @app.route('/')
 def index_page():
