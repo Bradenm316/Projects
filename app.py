@@ -2,9 +2,8 @@
 
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, render_template, request
 from core.session import Sessions
-from flask import jsonify
 
 app = Flask(__name__)
 HOST, PORT = 'localhost', 8080
@@ -15,13 +14,6 @@ db = Database('database/store_records.db')
 products = db.get_full_inventory()
 sessions = Sessions()
 sessions.add_new_session(username, db)
-
-
-# Available flavors, toppings, and fillings
-available_flavors = ["Chocolate", "Vanilla", "Strawberry"]
-available_toppings = ["Sprinkles", "Chocolate Chips", "Fruit"]
-available_fillings = ["Strawberry Jam", "Chocolate Ganache", "Cream Cheese"]
-
 
 @app.route('/')
 def index_page():
@@ -116,7 +108,6 @@ def register():
 
 @app.route('/shopping_cart', methods=['POST'])
 def add_product_to_cart():
-
     order = {}
     user_session = sessions.get_session(username)
     for item in products:
@@ -124,30 +115,40 @@ def add_product_to_cart():
         count = int(request.form[str(item['id'])])
         if count > 0:
             cost = count * item['price']
-            customization_cost = 0
+            flavor, toppings, fillings = None, None, None
+            customization_cost_flavor = None
+            customization_cost_toppings = None
+            customization_cost_fillings = None
             if(request.form.get("flavor-" + str(item['id']))):
-                customization_cost = 0
+                customization_cost_flavor = 0
                 flavor = request.form.get("flavor-" + str(item['id']))
                 if(flavor != "Vanilla"):
-                    customization_cost = 10
-                cost += customization_cost * count
+                    customization_cost_flavor = 10
+                customization_cost_flavor *= count
+                cost += customization_cost_flavor * count
             if(request.form.get("toppings-" + str(item['id']))):
-                customization_cost = 0
-                flavor = request.form.get("toppings-" + str(item['id']))
-                if(flavor != "Sprinkles"):
-                    customization_cost = 5
-                cost += customization_cost * count
+                customization_cost_toppings= 0
+                toppings = request.form.get("toppings-" + str(item['id']))
+                if(toppings != "Sprinkles"):
+                    customization_cost_toppings = 5
+                customization_cost_toppings *= count
+                cost += customization_cost_toppings * count
             if(request.form.get("fillings-" + str(item['id']))):
-                customization_cost = 0
-                flavor = request.form.get("fillings-" + str(item['id']))
-                if(flavor == "Strawberry Jam"):
-                    customization_cost = 20
-                if(flavor == "Chocolate Ganache"):
-                    customization_cost = 20 
-                if(flavor == "Cream Cheese"):
-                    customization_cost = 20
-                cost += customization_cost * count
-            order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url']}
+                customization_cost_fillings = 0
+                fillings = request.form.get("fillings-" + str(item['id']))
+                if(fillings == "Strawberry Jam"):
+                    customization_cost_fillings = 20
+                if(fillings == "Chocolate Ganache"):
+                    customization_cost_fillings = 20 
+                if(fillings == "Cream Cheese"):
+                    customization_cost_fillings = 20
+                customization_cost_fillings *= count
+                cost += customization_cost_fillings * count
+            order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url'],
+                                        "flavor": flavor, "toppings":toppings, "fillings":fillings, 
+                                        "customization_cost_flavor": customization_cost_flavor,
+                                        "customization_cost_toppings": customization_cost_toppings,
+                                        "customization_cost_fillings": customization_cost_fillings}
             user_session.add_new_item(
                 item['id'], item['item_name'], round(cost,2), count)
         else:
@@ -174,83 +175,8 @@ def checkout():
     modifies:
         - sessions: adds items to the user's cart
     """
-    # order = {}
-    # user_session = sessions.get_session(username)
-    # for item in products:
-    #     print(f"item ID: {item['id']}")
-    #     if request.form[str(item['id'])] > '0':
-    #         count = request.form[str(item['id'])]
-    #         order[item['item_name']] = count
-    #         user_session.add_new_item(
-    #             item['id'], item['item_name'], item['price'], count)
-
-    # user_session.submit_cart()
-
-    # return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
-    # order = {}
     user_session = sessions.get_session(username)
-    # for item in products:
-    #  if request.form.get(str(item['id'])):
-    #     count = int(request.form[str(item['id'])])
-    #     if count > 0:
-    #         cost = (count * item['price']) #see which checkbox inputs are selected and add extra cost accordingly
-    #         if(request.form.get("flavor-" + str(item['id']))):
-    #             flavor = request.form.get("flavor-" + str(item['id']))
-    #             if(flavor != "Vanilla"):
-    #                 cost += 20 * count
-    #         order[item['item_name']] = {'count': count, 'cost': cost, 'image_url': item['image_url']}
-    #         user_session.add_new_item(
-    #             item['id'], item['item_name'], item['price'], count)
-    #     else:
-    #         order.pop(item['item_name'], None)
-    #         user_session.remove_item(item['id'])
-    #         user_session.add_new_item(item['id'], item['item_name'], 0, 0)
-    # user_session.submit_cart()
-    
     return render_template('checkout.html', total_cost=user_session.total_cost)
-
-# Create a new route for virtual customization
-@app.route('/customize', methods=['GET'])
-def customize_cake():
-    """
-    Renders the customize cake page when the user is at the `/customize` endpoint.
-
-    args:
-        - None
-
-    returns:
-        - None
-    """
-    return render_template('customize.html', flavors=available_flavors, toppings=available_toppings, fillings=available_fillings)
-
-# Create a new route to handle the form submission for cake customization
-@app.route('/customize', methods=['POST'])
-def process_customization():
-    """
-    Processes the customization form when the user submits the form.
-
-    args:
-        - None
-
-    returns:
-        - JSON response containing the selected cake customization details.
-    """
-    selected_flavor = request.form['flavor']
-    selected_topping = request.form['topping']
-    selected_filling = request.form['filling']
-    
-    cost = 0
-    global CUSTOMIZATION_COST
-    
-    if selected_flavor == "Chocolate":
-        cost += 10
-    elif selected_flavor == "Vanilla":
-        cost += 10
-    elif selected_flavor == "Strawberry":
-        cost += 10
-    #add for toppings and fillings later
-    CUSTOMIZATION_COST += cost
-    return redirect('/home')
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)

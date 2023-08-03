@@ -10,6 +10,7 @@
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity</th>
+                    <th>Customization Options</th>
                     <th>Price</th>
                     <th>Image</th>
                 </tr>
@@ -19,6 +20,17 @@
                     <tr>
                         <td>{{ item }}</td>
                         <td>{{ details['count'] }}</td>
+                        <td>
+                            {% if details['flavor'] %}
+                                {{ details['flavor'] }}: +${{details['customization_cost_flavor']}} <br>
+                            {% endif %}
+                            {% if details['toppings'] %}
+                                {{ details['toppings'] }}: +${{details['customization_cost_toppings']}}<br>
+                            {% endif %}
+                            {% if details['fillings'] %}
+                                {{ details['fillings'] }}: +${{details['customization_cost_fillings']}}
+                            {% endif %}
+                        </td>
                         <td>${{ details['cost'] }}</td>
                         <td><img src="{{ details.image_url }}" class="product_card-img" style="float: left;"></td>
                     </tr>
@@ -28,16 +40,16 @@
 
         <div class="row">
             <div class="col-md-12" id="index_buttons">
-                <button onclick="history.go(-1)" class="btn-primary" id="contiune_shopping_button">Contiune Shopping</button>
+                <button onclick="history.go(-1)" class="btn btn-primary" id="continue_shopping_button">Continue Shopping</button>
             </div>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12" id="index_buttons">
                 <a href="/customize" class="btn-primary" id="customize_button">Customize</a>
             </div>
         </div>
-        
+         -->
 
         <form action="/checkout" method="post">
             <div class="row">

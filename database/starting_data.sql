@@ -1,3 +1,4 @@
+-- Users
 INSERT into `users` (`username`, `password_hash`, `email`, `first_name`, `last_name`)
 VALUES ('aturing', 'b93727798b520dc10d145b53909c061f082ff14cd5f8cb4ab24c3b71bfa57d7e12e1296029be74c06a0d91ba32756f9fc978047fbe7232be67f94dfc1de9ced9', 'alan@enigma.com', 'Alan', 'Turing');
 
@@ -18,32 +19,27 @@ INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `ca
 VALUES ('Cookies & Cream', 'Three layers of chocolate and three layers of vanilla cake filled with cookies and cream mousse and iced with alternating stripes of mousse and buttercream. Coated with chocolate ganache and then garnished with sandwich cookies, chocolate bars, and chocolate pieces.', 39.99, 10, 'static/images/cookiesCreamCake.jpeg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Pink Vanilla Dream', 'Six layers of vanilla cake iced in soft pink buttercream icing. Garnished with raspberry macarons, vanilla wafers, meringues, and white icing drip.', 39.99, 8, 'static/images/pinkVanillaDream.jpeg', 'Cake');
+VALUES ('Pink Vanilla Dream', 'Six layers of vanilla cake iced in soft pink buttercream icing. Garnished with raspberry macarons, vanilla wafers, meringues, and white icing drip.', 35.99, 8, 'static/images/pinkVanillaDream.jpeg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Cheesecake', 'Consists of a thick, creamy filling over a thinner crust', 19.99, 15, 'static/images/cheesecake.jpeg', 'Cake');
+VALUES ('Cheesecake', 'Consists of a thick, creamy filling over a thinner crust.', 19.99, 15, 'static/images/cheesecake.jpeg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Tiramisu', 'Consists of layers of sponge cake soaked in coffee and brandy or liqueur with powdered chocolate and mascarpone cheese', 25.99, 12, 'static/images/tiramisu.jpeg', 'Cake');
+VALUES ('Tiramisu', 'Consists of layers of sponge cake soaked in coffee and brandy or liqueur with powdered chocolate and mascarpone cheese.', 25.99, 12, 'static/images/tiramisu.jpeg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Chocolate Fudge', 'Thick layer of chocolate cake surrounding a melted chocolate inside', 36.99, 10, 'static/images/chocolate_fudge.jpeg', 'Cake');
+VALUES ('Chocolate Fudge', 'Thick layer of chocolate cake surrounding a melted chocolate inside.', 36.99, 10, 'static/images/chocolate_fudge.jpeg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Red Velvet', 'Consists of layers of cheesecake with red velvet flavor', 40.99, 12, 'static/images/Red-Velvet-Cheesecake.jpg', 'Cake'); 
+VALUES ('Red Velvet', 'Consists of layers of cheesecake with red velvet flavor.', 40.99, 12, 'static/images/Red-Velvet-Cheesecake.jpg', 'Cake'); 
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Lemon Cake', 'Vanilla cake layer with lush lemon cream cheese icing', 30.99, 45, 'static/images/lemon-cake.jpg', 'Cake');
+VALUES ('Snickers', 'Chocolate cake layer with sweet peanut, caramel, and nougat.', 49.99, 10, 'static/images/snickers-cake.jpg', 'Cake');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Snickers', 'chocolate cake layer with sweet peanut, caramel, and nougat', 49.99, 10, 'static/images/snickers-cake.jpg', 'Cake');
+VALUES ('Strawberry Passion', 'Layers of moist Red Velvet Cake, Strawberry Puree and Strawberry Ice Cream with Graham Cracker Pie Crust wrapped in fluffy Strawberry Frosting.', 60.49, 100, 'static/images/Strawberry-Passion.jpeg', 'Cake');
 
-INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Strawberry Passion', 'Layers of moist Red Velvet Cake, Strawberry Puree and Strawberry Ice Cream with Graham Cracker Pie Crust wrapped in fluffy Strawberry Frosting', 60.49, 100, 'static/images/Strawberry-Passion.jpeg', 'Cake');
-
--- INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
--- VALUES ();
-
+-- Sales
 INSERT into `sales` (`transaction_id`, `username`, `item_id`, `quantity`, `sale_date`, `cost`)
 VALUES ('1', 'aturing', '1', 10, '2022-12-21 7:30:30', 5.50);
 
