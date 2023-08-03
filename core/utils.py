@@ -33,7 +33,7 @@ def calculate_cost(price: int, quantity: int, discount: float = 0.0, tax_rate: f
     returns:
         - The cost of the item as a float.
     """
-    return (price * quantity) * (1 - discount) * (1 + tax_rate)
+    return (price) * (1 - discount) * (1 + tax_rate) #removedprice * quantity
 
 
 def calculate_total_cost(items: dict) -> float:

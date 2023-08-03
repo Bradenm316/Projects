@@ -190,14 +190,14 @@ def add_product_to_cart():
                 if(flavor != "Vanilla"):
                     customization_cost_flavor = 10
                 customization_cost_flavor *= count
-                cost += customization_cost_flavor * count
+                cost += customization_cost_flavor #removed * count
             if(request.form.get("toppings-" + str(item['id']))):
                 customization_cost_toppings= 0
                 toppings = request.form.get("toppings-" + str(item['id']))
                 if(toppings != "Sprinkles"):
                     customization_cost_toppings = 5
                 customization_cost_toppings *= count
-                cost += customization_cost_toppings * count
+                cost += customization_cost_toppings #removed * count
             if(request.form.get("fillings-" + str(item['id']))):
                 customization_cost_fillings = 0
                 fillings = request.form.get("fillings-" + str(item['id']))
@@ -208,7 +208,7 @@ def add_product_to_cart():
                 if(fillings == "Cream Cheese"):
                     customization_cost_fillings = 20
                 customization_cost_fillings *= count
-                cost += customization_cost_fillings * count
+                cost += customization_cost_fillings #removed * count
             order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url'],
                                         "flavor": flavor, "toppings":toppings, "fillings":fillings, 
                                         "customization_cost_flavor": customization_cost_flavor,
