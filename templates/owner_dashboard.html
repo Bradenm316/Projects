@@ -1,59 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Owner Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        /* Custom styles for the dashboard */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            padding: 20px;
-        }
-        h1, h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        a {
-            color: #ff00f7;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to the Owner Dashboard</h1>
-        <h2>Sales Data</h2>
-        <table>
-            <tr>
-                <th>Sale ID</th>
-                <th>Transaction ID</th>
-                <th>Username</th>
-                <th>Item ID</th>
-                <th>Quantity</th>
-                <th>Sale Date</th>
-                <th>Cost</th>
-            </tr>
-            {% for sale in sales %}
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row" id="info_row">
+    <div class="col-md-12">
+        <h3>Welcome to the Owner Dashboard</h3>
+        <h4>Sales Data</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Transaction ID</th>
+                    <th>Username</th>
+                    <th>Item ID</th>
+                    <th>Quantity</th>
+                    <th>Sale Date</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
                 <tr>
                     <td>{{ sale.sale_id }}</td>
                     <td>{{ sale.transaction_id }}</td>
@@ -63,17 +28,14 @@
                     <td>{{ sale.sale_date }}</td>
                     <td>{{ sale.cost }}</td>
                 </tr>
-            {% endfor %}
+                {% endfor %}
+            </tbody>
         </table>
 
-        <h2>Order Data</h2>
-        <ul>
-            {% for order in orders %}
-                <li>{{ order }}</li>
-            {% endfor %}
-        </ul>
+        <h4>Order Data</h4>
+        <!-- Display order data as needed -->
 
-        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+        <p><a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a></p>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
