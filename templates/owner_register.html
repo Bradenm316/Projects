@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row" id="register_row">
+    <div class="col-md-12" id="register_class">
+        <form action="/owner_register" method="post" id="register_form">
+            <div class="form-group" id="register_form_group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+            </div>
+            <div class="form-group" id="register_form_group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary" id="register_button">Register</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
