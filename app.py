@@ -85,6 +85,19 @@ def owner_login():
     
     return render_template('owner_login.html')
 
+@app.route('/owner-dashboard')
+def owner_dashboard():
+    if not session.get('is_owner'):
+        return redirect(url_for('owner_login'))
+    
+    # Get sales data from the database
+    sales_data = db.get_full_sales_information()
+    
+    order_data = ["Order 1", "Order 2", "Order 3"]
+
+    return render_template('owner_dashboard.html', sales=sales_data, orders=order_data)
+
+
 @app.route('/register')
 def register_page():
     """
