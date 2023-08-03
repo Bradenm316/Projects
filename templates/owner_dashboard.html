@@ -33,7 +33,34 @@
         </table>
 
         <h4>Order Data</h4>
-        <!-- Display order data as needed -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Order Date</th>
+                    <th>Items</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.customer }}</td>
+                    <td>{{ order.order_date }}</td>
+                    <td>
+                        <ul>
+                            {% for item in order.items %}
+                            <li>{{ item.product_name }} ({{ item.quantity }})</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ order.total_amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
         <p><a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a></p>
     </div>
