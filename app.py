@@ -132,22 +132,15 @@ def owner_register():
     if request.method == 'POST':
         owner_username = request.form['username']
         owner_password = request.form['password']
-        owners.append({'username': owner_username, 'password': owner_password})
-        return redirect(url_for('owner_dashboard'))
 
-    return render_template('owner_register.html')
+        # Replace this with your owner registration logic
+        # For example, you can add the owner's username and hashed password to the database
+        salt, key = hash_password(owner_password)
+        db.insert_owner(owner_username, key, salt)
 
-@app.route('/owner-dashboard')
-def owner_dashboard():
-    if not session.get('is_owner'):
-        return redirect(url_for('owner_login'))
+        return redirect(url_for('owner_login'))  # Redirect to the owner login page after registration
     
-    # Fetch owner-specific data (e.g., sales, orders) from the database
-    # Replace the example data with your actual data fetching logic
-    sales_data = []
-    order_data = []
-
-    return render_template('owner_dashboard.html', sales=sales_data, orders=order_data)
+    return render_template('owner_register.html')
 
 @app.route('/shopping_cart', methods=['POST'])
 def add_product_to_cart():
