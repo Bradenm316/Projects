@@ -94,6 +94,20 @@ def owner_dashboard():
 
     return render_template('owner_dashboard.html', sales=sales_data, orders=order_data)
 
+@app.route('/add_to_order', methods=['POST'])
+def add_to_order():
+    if not session.get('is_owner'):
+        return redirect(url_for('owner_login'))
+    
+    if request.method == 'POST':
+        order_id = request.form['order_id']
+        product_id = request.form['product_id']
+        quantity = int(request.form['quantity'])
+        db.add_product_to_order(order_id, product_id, quantity)
+    
+    return redirect(url_for('owner_dashboard'))
+
+
 
 @app.route('/register')
 def register_page():
