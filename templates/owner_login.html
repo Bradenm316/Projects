@@ -13,7 +13,21 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
             </div>
+            <div class="form-group" id="info_form_group">
+                <label for="security_code">Security Code</label>
+                <input type="password" name="security_code" id="security_code" class="form-control"  placeholder="Security Code">
+            </div>
             <button type="submit" class="btn btn-primary" id="login_button">Login</button>
+                    {% if password_incorrect %}
+                        <div class="alert alert-danger" role="alert">
+                        Incorrect Password. Please try again.
+                        </div>
+                    {% endif %}
+                    {% if error_message %}
+                    <div class="alert alert-danger" role="alert">
+                        Sorry, wrong security code. You can't login as an owner.
+                    </div>
+                    {% endif %}
         </form>
     </div>
 </div>

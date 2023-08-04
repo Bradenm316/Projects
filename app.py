@@ -69,21 +69,39 @@ def login():
         print(f"Incorrect username ({username}) or password ({password}).")
         return render_template('login.html', password_incorrect=password_incorrect)
 
+
+@app.route('/owner_login')
+def owner_login_page():
+    """
+    Renders the login page when the user is at the `/login` endpoint.
+
+    args:
+        - None
+
+    returns:
+        - None
+    """
+    return render_template('owner_login.html')
+
 @app.route('/owner_login', methods=['GET', 'POST'])
 def owner_login():
-    if request.method == 'POST':
-        owner_username = request.form['username']
-        owner_password = request.form['password']
-        
-        # Check if the owner credentials and security code are correct
-        if (owner_username == 'owner' and owner_password == 'password'):
-            session['is_owner'] = True
-            return redirect(url_for('owner_dashboard'))
+    username = request.form['username']
+    password = request.form['password']
+    security_code = request.form['security_code']
+    error_message= None
+    if login_pipeline(username, password):
+        if security_code == 'ITSC3155':
+            sessions.add_new_session(username, db)
+            return render_template('owner_dashboard.html', products=products, sessions=sessions)
         else:
-            error_message = "Invalid credentials"
+            error_message = "Sorry, wrong security code. You can't login as an owner."
             return render_template('owner_login.html', error_message=error_message)
-    
-    return render_template('owner_login.html')
+    else:
+        password_incorrect = True
+        print(f"Incorrect username ({username}) or password ({password}).")
+        if security_code != 'ITSC3155': 
+            error_message = "Sorry, wrong security code. You can't login as an owner."
+        return render_template('owner_login.html', password_incorrect=password_incorrect, error_message=error_message)
 
 @app.route('/owner-dashboard')
 def owner_dashboard():
@@ -108,7 +126,7 @@ def add_to_order():
     return redirect(url_for('owner_dashboard'))
 
 
-
+# customer registration
 @app.route('/register')
 def register_page():
     """
@@ -148,27 +166,41 @@ def register():
     db.insert_user(username, key, email, first_name, last_name)
     return render_template('index.html')
 
-@app.route('/owner_register', methods=['GET', 'POST'])
-def owner_register():
-    error_message = None  # Initialize error_message
-    if request.method == 'POST':
-        owner_username = request.form['username']
-        owner_password = request.form['password']
-        security_code = request.form['security_code']
+# # owner registation
+# @app.route('/owner_register')
+# def owner_register_page():
+#     """
+#     Renders the register page when the user is at the `/register` endpoint.
 
-        if security_code != 'ITSC3155': 
-            error_message = "Sorry, wrong security code. You can't register as an owner."
-        else:
-            email = request.form['email']
-            first_name = request.form['first_name']
-            last_name = request.form['last_name']
-            salt, key = hash_password(owner_password)
-            update_passwords(username, key, salt)
-            db.insert_user(username, key, email, first_name, last_name)
+#     args:
+#         - None
 
-            return redirect(url_for('owner_login'))
+#     returns:
+#         - None
+#     """
+#     return render_template('owner_register.html')
 
-    return render_template('owner_register.html', error_message=error_message)
+# @app.route('/owner_register', methods=['POST'])
+# def owner_register():
+#     error_message = None  # Initialize error_message
+#     if request.method == 'POST':
+#         owner_username = request.form['username']
+#         owner_password = request.form['password']
+#         security_code = request.form['security_code']
+
+#         if security_code != 'ITSC3155': 
+#             error_message = "Sorry, wrong security code. You can't register as an owner."
+#         else:
+#             email = request.form['email']
+#             first_name = request.form['first_name']
+#             last_name = request.form['last_name']
+#             salt, key = hash_password(owner_password)
+#             update_passwords(username, key, salt)
+#             db.insert_user(username, key, email, first_name, last_name)
+
+#             return redirect(url_for('owner_login'))
+
+#     return render_template('owner_register.html', error_message=error_message)
 
 
 @app.route('/shopping_cart', methods=['POST'])
