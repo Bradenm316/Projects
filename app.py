@@ -311,6 +311,7 @@ def checkout():
         - sessions: adds items to the user's cart
     """
     user_session = sessions.get_session(username)
+    
     return render_template('checkout.html', total_cost=user_session.total_cost)
 
 @app.route('/apply_discount', methods=['POST'])

@@ -26,6 +26,7 @@ class UserSession:
         self.date = None
         self.db = db
         self.cart = self.empty_cart()
+        self.discount_applied = False
 
     def empty_cart(self) -> dict:
         """
@@ -125,7 +126,10 @@ class UserSession:
         returns:
             - None
         """
-        self.total_cost *= (1 - discount)
+        if not self.discount_applied:
+            self.total_cost *= (1 - discount)
+            self.total_cost = round(self.total_cost, 2)
+            self.discount_applied = True
 
     def remove_discount(self):
         """
