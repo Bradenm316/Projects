@@ -3,14 +3,33 @@
 {% block content %}
 <div class="row">
     <div class="col-md-12" id="index_buttons">
-        <a href="/logout" class="btn btn-primary" id="logout_button">Logout</a>
+        <a href="/logout" class="btn btn-primary" id="logout_button">Owner Logout</a>
     </div>
 </div>
-<div class="row" id="info_row">
     <div class="col-md-12">
         <h3>Welcome to Dashboard</h3>
+        <h4>Products Inventory</h4>
     </div>
-    <div class="col-md-6">
+        <div class="form-group">
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4">
+                    <div id={{product.id}}>
+                        <div class="product_card" id="product_card">
+                            <img src="{{ product.image_url }}" class="product_card-img" >
+                            <div class="product_card-body">
+                                <h5 class="product_card-title">{{ product.item_name }}</h5>
+                                <p class="product_card-text">{{ product.info }}</p>
+                                <p class="product_card-price">${{ product.price }}</p>
+                                <p class="product_card-text">Stock: {{product.stock}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    <!-- <div class="col-md-6">
         <h4>Sales Data</h4>
         <table class="table table-bordered">
             <thead>
@@ -82,5 +101,5 @@
             <button type="submit" class="btn btn-primary">Add to Order</button>
         </form>
     </div>
-</div>
+</div> -->
 {% endblock %}
