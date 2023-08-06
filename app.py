@@ -15,7 +15,8 @@ products = db.get_full_inventory()
 sessions = Sessions()
 sessions.add_new_session(username, db)
 owners =[]
-
+order = {}
+customer_info ={}
 
 @app.route('/')
 def index_page():
@@ -44,6 +45,19 @@ def login_page():
     """
     return render_template('login.html')
 
+@app.route('/logout')
+def logout_page():
+    """
+    Renders the login page when the user is at the `/logout` endpoint.
+
+    args:
+        - None
+
+    returns:
+        - None
+    """
+    return render_template('index.html', products=products)
+
 @app.route('/home', methods=['POST'])
 def login():
     """
@@ -68,7 +82,6 @@ def login():
         password_incorrect = True
         print(f"Incorrect username ({username}) or password ({password}).")
         return render_template('login.html', password_incorrect=password_incorrect)
-
 
 @app.route('/owner_login')
 def owner_login_page():
@@ -125,7 +138,6 @@ def add_to_order():
     
     return redirect(url_for('owner_dashboard'))
 
-
 # customer registration
 @app.route('/register')
 def register_page():
@@ -164,7 +176,7 @@ def register():
     salt, key = hash_password(password)
     update_passwords(username, key, salt)
     db.insert_user(username, key, email, first_name, last_name)
-    return render_template('index.html')
+    return render_template('index.html',  products=products)
 
 # # owner registation
 # @app.route('/owner_register')
@@ -205,7 +217,7 @@ def register():
 
 @app.route('/shopping_cart', methods=['POST'])
 def add_product_to_cart():
-    order = {}
+    # order = {}
     user_session = sessions.get_session(username)
     for item in products:
      if request.form.get(str(item['id'])):
@@ -222,14 +234,14 @@ def add_product_to_cart():
                 if(flavor != "Vanilla"):
                     customization_cost_flavor = 10
                 customization_cost_flavor *= count
-                cost += customization_cost_flavor #removed * count
+                cost += customization_cost_flavor
             if(request.form.get("toppings-" + str(item['id']))):
                 customization_cost_toppings= 0
                 toppings = request.form.get("toppings-" + str(item['id']))
                 if(toppings != "Sprinkles"):
                     customization_cost_toppings = 5
                 customization_cost_toppings *= count
-                cost += customization_cost_toppings #removed * count
+                cost += customization_cost_toppings
             if(request.form.get("fillings-" + str(item['id']))):
                 customization_cost_fillings = 0
                 fillings = request.form.get("fillings-" + str(item['id']))
@@ -240,7 +252,7 @@ def add_product_to_cart():
                 if(fillings == "Cream Cheese"):
                     customization_cost_fillings = 20
                 customization_cost_fillings *= count
-                cost += customization_cost_fillings #removed * count
+                cost += customization_cost_fillings
             order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url'],
                                         "flavor": flavor, "toppings":toppings, "fillings":fillings, 
                                         "customization_cost_flavor": customization_cost_flavor,
@@ -256,6 +268,32 @@ def add_product_to_cart():
     user_session.submit_cart()
 
     return render_template('shopping_cart.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
+
+@app.route('/confirmation_details', methods=['POST'])
+def confirmation_details():
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    shipping_address = request.form.get('shipping_address')
+    email = request.form.get('email')
+    phone_number = request.form.get('phone_number')
+    card_number = request.form.get('card_number')
+    expiration = request.form.get('expiration')
+    name_on_card = request.form.get('name_on_card')
+    cvv = request.form.get('cvv')
+    customer_info = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'shipping_address': shipping_address,
+            'email': email,
+            'phone_number': phone_number,
+            'card_number': card_number,
+            'expiration': expiration,
+            'name_on_card': name_on_card,
+            'cvv': cvv,
+        }
+    user_session = sessions.get_session(username)
+    print(customer_info)
+    return render_template('confirmation_details.html', order=order, customer_info=customer_info, sessions=sessions, total_cost=user_session.total_cost)
 
 
 @app.route('/checkout', methods=['POST'])

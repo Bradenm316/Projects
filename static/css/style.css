@@ -26,7 +26,7 @@
     /* height: 125px; */
 }
 
-#login_button {
+#login_button, #owner_login_button, #logout_button {
     background-color: #4963f4;
     border-color: #ccc;
     color: rgb(236, 236, 236);
