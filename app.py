@@ -313,5 +313,15 @@ def checkout():
     user_session = sessions.get_session(username)
     return render_template('checkout.html', total_cost=user_session.total_cost)
 
+@app.route('/apply_discount', methods=['POST'])
+def apply_discount():
+    discount_code = request.form.get('discount_code')
+    if discount_code == '15percent':
+        user_session = sessions.get_session(username)
+        user_session.apply_discount(0.15)  # 15% discount applied
+
+    # Redirect back to the shopping cart
+    return render_template('shopping_cart.html', total_cost=user_session.total_cost, order=user_session.cart, sessions=sessions)
+
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)

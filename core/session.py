@@ -19,6 +19,7 @@ class UserSession:
         - db: The database to use.
     """
 
+
     def __init__(self, username: str, db: Database):
         self.username = username
         self.total_cost = 0
@@ -114,6 +115,30 @@ class UserSession:
         self.update_total_cost()
         self.date = datetime.now()
 
+    def apply_discount(self, discount):
+        """
+        Applies a discount to the total cost of the user's cart.
+
+        args:
+            - discount: The discount to apply (a decimal number representing the discount percentage).
+
+        returns:
+            - None
+        """
+        self.total_cost *= (1 - discount)
+
+    def remove_discount(self):
+        """
+        Removes any applied discount from the total cost of the user's cart.
+
+        args:
+            - None
+
+        returns:
+            - None
+        """
+        self.total_cost = calculate_total_cost(self.cart)
+
 
 class Sessions:
     """
@@ -177,3 +202,5 @@ class Sessions:
             - A dictionary of user sessions.
         """
         return self.sessions
+    
+    
