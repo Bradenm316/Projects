@@ -75,6 +75,7 @@ class UserSession:
         self.cart[id] = {"name": name, "price": price, "quantity": quantity,
                          "discount": discount, "tax_rate": tax_rate}
 
+
     def update_item_quantity(self, id: str, change_to_quantity: int) -> None:
         """
         Updates the quantity of an item in the user's cart.
