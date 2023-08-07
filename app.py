@@ -2,7 +2,7 @@
 
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from core.session import Sessions
 
 app = Flask(__name__)
@@ -271,20 +271,20 @@ def add_product_to_cart():
                     customization_cost_fillings = 20
                 customization_cost_fillings *= count
                 cost += customization_cost_fillings
-                #if item['stock'] >= count:
-                #item['stock'] -= count
-                order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url'],
+                if item['stock'] >= count:
+                    item['stock'] -= count
+                    order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url'],
                                         "flavor": flavor, "toppings":toppings, "fillings":fillings, 
                                         "customization_cost_flavor": customization_cost_flavor,
                                         "customization_cost_toppings": customization_cost_toppings,
                                         "customization_cost_fillings": customization_cost_fillings}
-            user_session.add_new_item(
-                item['id'], item['item_name'], round(cost,2), count)
-            
-            #else:
-            #flash(
-                #f"Out of stock {item['item_name']}. Available stock: {item['stock']}"
-            # )
+                    user_session.add_new_item(
+                        item['id'], item['item_name'], round(cost,2), count)
+            else:
+                flash(
+                f"Out of stock {item['item_name']}. Available stock: {item['stock']}"
+                )
+        
         else:
             order.pop(item['item_name'], None)
             user_session.remove_item(item['id'])
