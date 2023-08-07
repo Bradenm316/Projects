@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <h2>Your Total: $<span id="total_cost">{{ total_cost }}</span></h2>
         <p id="discount_status">{% if discount_applied %}Discount Applied{% else %}No Discount{% endif %}</p>
-        <button id="apply_discount_btn" onclick="applyDiscount()">Apply Discount</button>
+        <button id="apply_discount_btn" onclick="applyDiscount()">Confirm Discount</button>
         
         <form action="/confirmation_details" method="POST">
             <div class="form-group" id="info_form_group">
