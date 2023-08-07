@@ -280,10 +280,6 @@ def add_product_to_cart():
                                         "customization_cost_fillings": customization_cost_fillings}
                     user_session.add_new_item(
                         item['id'], item['item_name'], round(cost,2), count)
-            else:
-                flash(
-                f"Out of stock {item['item_name']}. Available stock: {item['stock']}"
-                )
         
         else:
             order.pop(item['item_name'], None)
