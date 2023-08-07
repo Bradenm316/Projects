@@ -47,6 +47,9 @@
                 <input type="password" name="cvv" id="cvv" class="form-control">
             </div>
 
+            <input type="hidden" name="discounted_total" value="{{ discounted_total }}">
+
+
             <div class="row">
                 <div class="col-md-12" id="index_buttons">
                     <button type="submit" class="btn btn-primary" id="checkout_button">Submit</button>
@@ -70,6 +73,10 @@
             discountStatusElement.innerText = 'Discount Applied';
             applyDiscountButton.disabled = true; // Disable the button after applying the discount
             applyDiscountButton.style.display = 'none'; //Hide the button
+
+            // Update the hidden input field with the discounted total
+            var discountedTotalInput = document.getElementById('discounted_total');
+            discountedTotalInput.value = discountedTotalCost.toFixed(2);
         }
     }
 </script>

@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <hr>
         <h1>Order Confirmed!</h1>
-        <h3>Your Total: {{total_cost}}</h3>
+        <h3>Your Total: ${{ discounted_total|floatformat(2) }}</h3>
         <br>
         <h2>Order Details:</h2>
         {% if customer_info %}
@@ -55,4 +55,21 @@
         </table>
     </div>
 </div>
+
+<script>
+    // Function to apply the discounted total dynamically
+    function applyDiscountedTotal() {
+        var totalElement = document.getElementById('total_cost');
+        var discountedTotalElement = document.getElementById('discounted_total');
+
+        // Check if the discounted total element exists and is not empty
+        if (discountedTotalElement && discountedTotalElement.innerText !== '') {
+            var discountedTotal = parseFloat(discountedTotalElement.innerText);
+            totalElement.innerText = discountedTotal.toFixed(2);
+        }
+    }
+
+    // Call the function when the page loads
+    window.onload = applyDiscountedTotal();
+</script>
 {% endblock %}

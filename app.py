@@ -288,6 +288,10 @@ def confirmation_details():
     expiration = request.form.get('expiration')
     name_on_card = request.form.get('name_on_card')
     cvv = request.form.get('cvv')
+
+     # Fetch the discounted_total from the form data
+    discounted_total = float(request.form.get('discounted_total'))
+
     customer_info = {
             'first_name': first_name,
             'last_name': last_name,
@@ -300,8 +304,10 @@ def confirmation_details():
             'cvv': cvv,
         }
     user_session = sessions.get_session(username)
-    print(customer_info)
-    return render_template('confirmation_details.html', order=order, customer_info=customer_info, sessions=sessions, total_cost=user_session.total_cost)
+    # Ensure the discounted_total is available in the context
+    #discounted_total = user_session.discounted_total if user_session.discount_applied else None
+    #print(customer_info)
+    return render_template('confirmation_details.html', order=order, customer_info=customer_info, sessions=sessions, total_cost=user_session.total_cost, discounted_total=discounted_total)
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
@@ -324,8 +330,10 @@ def checkout():
     # Check if the discount is applied and adjust the total cost accordingly
     if user_session.discount_applied:
         total_cost *= (1 - 0.15)  # Apply 15% discount
+    else:
+        discounted_total = total_cost
 
-    return render_template('checkout.html', total_cost=total_cost, discount_applied=discount_applied)
+    return render_template('checkout.html', total_cost=total_cost, discount_applied=discount_applied, discounted_total=discounted_total)
 
 def get_image_url_for_item(item_name):
     for item in products:
