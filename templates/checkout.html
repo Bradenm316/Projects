@@ -5,9 +5,10 @@
 
 <div class="row" id="products_page">
     <div class="col-md-12">
-        <div class="row">
-            <h2>Your Total: {{total_cost}}</h2>
-        </div>
+        <h2>Your Total: $<span id="total_cost">{{ total_cost }}</span></h2>
+        <p id="discount_status">{% if discount_applied %}Discount Applied{% else %}No Discount{% endif %}</p>
+        <button id="apply_discount_btn" onclick="applyDiscount()">Apply Discount</button>
+        
         <form action="/confirmation_details" method="POST">
             <div class="form-group" id="info_form_group">
                 <label for="first_name">First Name</label>
@@ -27,23 +28,23 @@
             </div>
             <div class="form-group" id="info_form_group">
                 <label for="phone_number">Phone Number</label>
-                <input type="text" name="phone_number" id="phone_number" class="form-control" required pattern="[0-9]{10}">
+                <input type="text" name="phone_number" id="phone_number" class="form-control">
             </div>
             <div class="form-group" id="info_form_group">
                 <label for="card_number">Card Number</label>
-                <input type="text" name="card_number" id="card_number" class="form-control" required pattern="[0-9]{16}">
+                <input type="password" name="card_number" id="card_number" class="form-control">
             </div>
             <div class="form-group" id="info_form_group">
                 <label for="expiration">Expiration</label>
-                <input type="text" name="expiration" id="expiration" class="form-control" required pattern="\d{2}\/\d{2}">
+                <input type="text" name="expiration" id="expiration" class="form-control">
             </div>
             <div class="form-group" id="info_form_group">
                 <label for="name_on_card">Name on Card</label>
-                <input type="text" name="name_on_card" id="name_on_card" class="form-control">
+                <input type="password" name="name_on_card" id="name_on_card" class="form-control">
             </div>
             <div class="form-group" id="info_form_group">
                 <label for="cvv">CVV</label>
-                <input type="password" name="cvv" id="cvv" class="form-control" required pattern="[0-9]{3}">
+                <input type="password" name="cvv" id="cvv" class="form-control">
             </div>
 
             <div class="row">
@@ -54,4 +55,22 @@
         </form>
     </div>
 </div>
+
+<script>
+    function applyDiscount() {
+        var totalCostElement = document.getElementById('total_cost');
+        var discountStatusElement = document.getElementById('discount_status');
+        var applyDiscountButton = document.getElementById('apply_discount_btn');
+
+        var currentTotalCost = parseFloat(totalCostElement.innerText);
+
+        if (discountStatusElement.innerText === 'No Discount') {
+            var discountedTotalCost = currentTotalCost * 0.85; // 15% discount
+            totalCostElement.innerText = discountedTotalCost.toFixed(2);
+            discountStatusElement.innerText = 'Discount Applied';
+            applyDiscountButton.disabled = true; // Disable the button after applying the discount
+            applyDiscountButton.style.display = 'none'; //Hide the button
+        }
+    }
+</script>
 {% endblock %}
