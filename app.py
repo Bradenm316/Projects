@@ -123,7 +123,7 @@ def owner_dashboard():
     sales_data = db.get_full_sales_information()
     order_data = db.get_orders()
 
-    return render_template('owner_dashboard.html', sales=sales_data, orders=order_data)
+    return render_template('owner_dashboard.html', products=products, sales=sales_data, orders=order_data)
 
 @app.route('/add_to_order', methods=['POST'])
 def add_to_order():
@@ -271,13 +271,20 @@ def add_product_to_cart():
                     customization_cost_fillings = 20
                 customization_cost_fillings *= count
                 cost += customization_cost_fillings
-            order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url'],
+                #if item['stock'] >= count:
+                #item['stock'] -= count
+                order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url'],
                                         "flavor": flavor, "toppings":toppings, "fillings":fillings, 
                                         "customization_cost_flavor": customization_cost_flavor,
                                         "customization_cost_toppings": customization_cost_toppings,
                                         "customization_cost_fillings": customization_cost_fillings}
             user_session.add_new_item(
                 item['id'], item['item_name'], round(cost,2), count)
+            
+            #else:
+            #flash(
+                #f"Out of stock {item['item_name']}. Available stock: {item['stock']}"
+            # )
         else:
             order.pop(item['item_name'], None)
             user_session.remove_item(item['id'])
