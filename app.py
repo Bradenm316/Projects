@@ -18,7 +18,7 @@ owners =[]
 order = {}
 customer_info ={}
 
-@app.route('/')
+@app.route('/')f
 def index_page():
     """
     Renders the index page when the user is at the `/` endpoint, passing along default flask variables.
