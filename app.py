@@ -135,6 +135,10 @@ def add_to_order():
         product_id = request.form['product_id']
         quantity = int(request.form['quantity'])
         db.add_product_to_order(order_id, product_id, quantity)
+
+        # Fetch the updated order from the user session
+        user_session = sessions.get_session(username)
+        order = user_session.cart
     
     return redirect(url_for('owner_dashboard'))
 
@@ -218,6 +222,10 @@ def register():
 @app.route('/shopping_cart', methods=['POST'])
 def add_product_to_cart():
     # order = {}
+
+    for item_name in order.keys():
+        order[item_name]['image_url'] = get_image_url_for_item(item_name)
+
     user_session = sessions.get_session(username)
     for item in products:
      if request.form.get(str(item['id'])):
@@ -295,7 +303,6 @@ def confirmation_details():
     print(customer_info)
     return render_template('confirmation_details.html', order=order, customer_info=customer_info, sessions=sessions, total_cost=user_session.total_cost)
 
-
 @app.route('/checkout', methods=['POST'])
 def checkout():
     """
@@ -311,18 +318,34 @@ def checkout():
         - sessions: adds items to the user's cart
     """
     user_session = sessions.get_session(username)
-    
-    return render_template('checkout.html', total_cost=user_session.total_cost)
+    total_cost = user_session.total_cost  # Get the original total cost
+    discount_applied = user_session.discount_applied
+
+    # Check if the discount is applied and adjust the total cost accordingly
+    if user_session.discount_applied:
+        total_cost *= (1 - 0.15)  # Apply 15% discount
+
+    return render_template('checkout.html', total_cost=total_cost, discount_applied=discount_applied)
+
+def get_image_url_for_item(item_name):
+    for item in products:
+        if item['item_name'] == item_name:
+            return item['image_url']
+    return None  # Return None if the item name is not found
 
 @app.route('/apply_discount', methods=['POST'])
 def apply_discount():
     discount_code = request.form.get('discount_code')
-    if discount_code == '15percent':
-        user_session = sessions.get_session(username)
-        user_session.apply_discount(0.15)  # 15% discount applied
+    user_session = sessions.get_session(username)
 
-    # Redirect back to the shopping cart
-    return render_template('shopping_cart.html', total_cost=user_session.total_cost, order=user_session.cart, sessions=sessions)
+    if discount_code == '15percent' and not user_session.discount_applied:
+        user_session.apply_discount(0.15)  # 15% discount applied
+        user_session.discount_applied = True
+
+    # If the discount code is not valid or already used, render the shopping cart as it is
+    total_cost = user_session.total_cost
+    return render_template('shopping_cart.html', order=user_session.cart, total_cost=total_cost, sessions=sessions)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
