@@ -44,6 +44,7 @@
                 <label for="discount_code">Discount Code:</label>
                 <input type="text" id="discount_code" name="discount_code">
                 <button type="button" onclick="applyDiscount()">Apply Discount</button>
+                <span id="discount_status" style="color: red;"></span> <!-- New span element to display the discount status -->
             </div>
         </div>
 
@@ -68,6 +69,8 @@
 <script>
     function applyDiscount() {
         var discountCode = document.getElementById('discount_code').value;
+        var discountStatusElement = document.getElementById('discount_status'); // Get the discount status element
+
         if (discountCode === '15percent') {
             var totalCostElement = document.getElementById('total_cost');
             var currentTotalCost = parseFloat(totalCostElement.innerText);
@@ -81,7 +84,16 @@
             // Disable the Apply Discount button after applying the discount
             var applyDiscountButton = document.querySelector('#index_buttons button');
             applyDiscountButton.disabled = true;
+
+            // Update the discount status message
+            discountStatusElement.innerText = 'Discount Applied';
+            discountStatusElement.style.color = 'green'; // Optionally, change the color to green for success
+        } else {
+            // If the discount code is incorrect, display an error message
+            discountStatusElement.innerText = 'Invalid Discount Code';
+            discountStatusElement.style.color = 'red'; // Set the color to red for error
         }
     }
 </script>
+
 {% endblock %}
