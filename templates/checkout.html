@@ -53,6 +53,10 @@
             <div class="row">
                 <div class="col-md-12" id="index_buttons">
                     <button type="submit" class="btn btn-primary" id="checkout_button">Submit</button>
+                    <form action="/confirmation_details" method="POST">
+                        <input type="hidden" name="discounted_total" value="{{ discounted_total }}">
+                        <button type="submit" class="btn btn-primary" id="checkout_button">Checkout</button>
+                    </form>
                 </div>
             </div>
         </form>

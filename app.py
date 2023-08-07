@@ -136,9 +136,19 @@ def add_to_order():
         quantity = int(request.form['quantity'])
         db.add_product_to_order(order_id, product_id, quantity)
 
-        # Fetch the updated order from the user session
-        user_session = sessions.get_session(username)
-        order = user_session.cart
+    # Fetch the updated order from the user session
+    user_session = sessions.get_session(username)
+    order = user_session.cart
+
+    # Calculate the discounted price for each item in the order
+    for item_name, item_details in order.items():
+        item_cost = item_details['cost']
+        if user_session.discount_applied:
+            item_discounted_cost = item_cost * 0.85  # 15% discount applied
+            order[item_name]['discounted_cost'] = round(item_discounted_cost, 2)
+        else:
+            order[item_name]['discounted_cost'] = item_cost
+
     
     return redirect(url_for('owner_dashboard'))
 
@@ -289,9 +299,6 @@ def confirmation_details():
     name_on_card = request.form.get('name_on_card')
     cvv = request.form.get('cvv')
 
-     # Fetch the discounted_total from the form data
-    discounted_total = float(request.form.get('discounted_total'))
-
     customer_info = {
             'first_name': first_name,
             'last_name': last_name,
@@ -303,10 +310,10 @@ def confirmation_details():
             'name_on_card': name_on_card,
             'cvv': cvv,
         }
+    # Fetch the discounted total from the session and round it to two decimal places
     user_session = sessions.get_session(username)
-    # Ensure the discounted_total is available in the context
-    #discounted_total = user_session.discounted_total if user_session.discount_applied else None
-    #print(customer_info)
+    discounted_total = round(user_session.get_discounted_total(), 2)
+    
     return render_template('confirmation_details.html', order=order, customer_info=customer_info, sessions=sessions, total_cost=user_session.total_cost, discounted_total=discounted_total)
 
 @app.route('/checkout', methods=['POST'])
@@ -323,13 +330,14 @@ def checkout():
     modifies:
         - sessions: adds items to the user's cart
     """
+    # Fetch the discounted total from the user session
     user_session = sessions.get_session(username)
     total_cost = user_session.total_cost  # Get the original total cost
     discount_applied = user_session.discount_applied
 
     # Check if the discount is applied and adjust the total cost accordingly
     if user_session.discount_applied:
-        total_cost *= (1 - 0.15)  # Apply 15% discount
+        discounted_total = total_cost * 0.85  # 15% discount
     else:
         discounted_total = total_cost
 

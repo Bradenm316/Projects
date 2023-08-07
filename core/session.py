@@ -27,6 +27,7 @@ class UserSession:
         self.db = db
         self.cart = self.empty_cart()
         self.discount_applied = False
+        self.customization_cost = 0
 
     def empty_cart(self) -> dict:
         """
@@ -143,6 +144,28 @@ class UserSession:
             - None
         """
         self.total_cost = calculate_total_cost(self.cart)
+
+    def get_discounted_total(self):
+        """
+        Calculates and returns the discounted total if a discount is applied.
+
+        args:
+            - None
+
+        returns:
+            - The discounted total if a discount is applied, otherwise, returns the regular total cost.
+        """
+        if self.discount_applied:
+            return self.total_cost * 0.85  # 15% discount
+        else:
+            return self.total_cost
+    
+
+    def get_discounted_total(self):
+        if self.discount_applied:
+            return self.total_cost * 0.85  # 15% discount applied
+        else:
+            return self.total_cost
 
 
 class Sessions:

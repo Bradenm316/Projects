@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <hr>
         <h1>Order Confirmed!</h1>
-        <h3>Your Total: ${{ discounted_total|floatformat(2) }}</h3>
+        <h3>Your Total: ${{ '{:.2f}'.format(discounted_total) }}</h3>
         <br>
         <h2>Order Details:</h2>
         {% if customer_info %}
