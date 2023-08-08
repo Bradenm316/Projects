@@ -123,6 +123,49 @@ class Database:
         self.cursor.execute(
             "SELECT stock FROM inventory WHERE id = ?", (item_id,))
         return self.cursor.fetchone()
+    def update_product_stock(self, product_id, new_stock):
+        """
+        Update the stock value for a specific product.
+        
+        Args:
+        product_id (int): The ID of the product to update.
+        new_stock (int): The new stock value for the product.
+        
+        Returns:
+        None
+        """
+        query = """
+        UPDATE products
+        SET stock = ?
+        WHERE id = ?;
+        """
+        self.cursor.execute(query, (new_stock, product_id))
+        self.connection.commit()
+
+def insert_purchase(self, customer_username, item_name, quantity, cost, flavor, toppings, fillings):
+    """
+    Insert a new purchase record into the `purchases` table.
+
+    Args:
+        customer_username (str): The username of the customer making the purchase.
+        item_name (str): The name of the item being purchased.
+        quantity (int): The quantity of the item being purchased.
+        cost (float): The total cost of the purchase.
+        flavor (str): The selected flavor for the item (can be None).
+        toppings (str): The selected toppings for the item (can be None).
+        fillings (str): The selected fillings for the item (can be None).
+
+    Returns:
+        None
+    """
+    query = """
+    INSERT INTO purchases (customer_username, item_name, quantity, cost, flavor, toppings, fillings)
+    VALUES (?, ?, ?, ?, ?, ?, ?);
+    """
+    self.cursor.execute(query, (customer_username, item_name, quantity, cost, flavor, toppings, fillings))
+    self.connection.commit()
+
+
 
     def get_item_image_url_by_id(self, item_id: int):
         """
