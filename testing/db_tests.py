@@ -310,7 +310,7 @@ def test_strawberry_passion_info(db: Database = None) -> tuple:
     db = Database("database/store_records.db") if db is None else db
     full_inventory = db.get_full_inventory()
     actual =[info for info in full_inventory if info['item_name']=='Strawberry Passion'][0]
-    expected = 'Layers of moist Red Velvet Cake, Strawberry Puree and Strawberry Ice Cream with Graham Cracker Pie Crust wrapped in fluffy Strawberry Frosting'
+    expected = 'Layers of moist Red Velvet Cake, Strawberry Puree and Strawberry Ice Cream with Graham Cracker Pie Crust wrapped in fluffy Strawberry Frosting.'
     if actual != expected:
         error = f"Error in test_strawberry_passion_info: description does not match expected value.\n  - Actual: {actual}"
         return False, error
