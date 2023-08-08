@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <hr>
         <h1>Order Confirmed!</h1>
-        <h3>Your Total: ${{ '{:.2f}'.format(discounted_total) }}</h3>
+        <h2>Your Total: ${{ total_cost }}</span></h2>        
         <br>
         <h2>Order Details:</h2>
         {% if customer_info %}
@@ -56,7 +56,29 @@
     </div>
 </div>
 
-<script>
+<!-- <script>
+    function applyDiscount() {
+        var totalCostElement = document.getElementById('total_cost');
+        var discountStatusElement = document.getElementById('discount_status');
+        var applyDiscountButton = document.getElementById('apply_discount_btn');
+
+        var currentTotalCost = parseFloat(totalCostElement.innerText);
+
+        if (discountStatusElement.innerText === 'No Discount') {
+            var discountedTotalCost = currentTotalCost * 0.85; // 15% discount
+            totalCostElement.innerText = discountedTotalCost.toFixed(2);
+            discountStatusElement.innerText = 'Discount Applied';
+            applyDiscountButton.disabled = true; // Disable the button after applying the discount
+            applyDiscountButton.style.display = 'none'; //Hide the button
+
+            // Update the hidden input field with the discounted total
+            var discountedTotalInput = document.getElementById('discounted_total');
+            discountedTotalInput.value = discountedTotalCost.toFixed(2);
+        }
+    }
+</script> -->
+
+<!-- <script>
     // Function to apply the discounted total dynamically
     function applyDiscountedTotal() {
         var totalElement = document.getElementById('total_cost');
@@ -71,5 +93,5 @@
 
     // Call the function when the page loads
     window.onload = applyDiscountedTotal();
-</script>
+</script> -->
 {% endblock %}
