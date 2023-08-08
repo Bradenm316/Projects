@@ -110,21 +110,30 @@ class Database:
             "SELECT price FROM inventory WHERE id = ?", (item_id,))
         return self.cursor.fetchone()
 
-    def get_item_stock_by_id(self, item_id: int):
-        """
-        Gets the stock of an item from the database.
+def insert_purchase(self, customer_username, item_name, quantity, cost, flavor, toppings, fillings):
+    """
+    Insert a new purchase record into the `purchases` table.
 
-        args:
-            - item_id: The id of the item to get.
+    Args:
+        customer_username (str): The username of the customer making the purchase.
+        item_name (str): The name of the item being purchased.
+        quantity (int): The quantity of the item being purchased.
+        cost (float): The total cost of the purchase.
+        flavor (str): The selected flavor for the item (can be None).
+        toppings (str): The selected toppings for the item (can be None).
+        fillings (str): The selected fillings for the item (can be None).
 
-        returns:
-            - The stock of the item with the given id.
-        """
-        self.cursor.execute(
-            "SELECT stock FROM inventory WHERE id = ?", (item_id,))
-        return self.cursor.fetchone()
+    Returns:
+        None
+    """
+    query = """
+    INSERT INTO purchases (customer_username, item_name, quantity, cost, flavor, toppings, fillings)
+    VALUES (?, ?, ?, ?, ?, ?, ?);
+    """
+    self.cursor.execute(query, (customer_username, item_name, quantity, cost, flavor, toppings, fillings))
+    self.connection.commit()
 
-    def get_item_image_url_by_id(self, item_id: int):
+def get_item_image_url_by_id(self, item_id: int):
         """
         Gets the image_url of an item from the database.
 
@@ -137,8 +146,8 @@ class Database:
         self.cursor.execute(
             "SELECT image_url FROM inventory WHERE id = ?", (item_id,))
         return self.cursor.fetchone()
-
-    def get_item_category_by_id(self, item_id: int):
+    
+def get_item_category_by_id(self, item_id: int):
         """
         Gets the category of an item from the database.
 
@@ -154,7 +163,7 @@ class Database:
 
     # ------ Setter methods ------
 
-    def set_item_name(self, item_id: int, new_name: str):
+def set_item_name(self, item_id: int, new_name: str):
         """
         Updates the name of an item in the database.
 
@@ -169,7 +178,7 @@ class Database:
             "UPDATE inventory SET name = ? WHERE id = ?", (new_name, item_id))
         self.connection.commit()
 
-    def set_item_info(self, item_id: int, new_info: str):
+def set_item_info(self, item_id: int, new_info: str):
         """
         Updates the information of an item in the database.
 
@@ -184,7 +193,7 @@ class Database:
             "UPDATE inventory SET info = ? WHERE id = ?", (new_info, item_id))
         self.connection.commit()
 
-    def set_item_price(self, item_id: int, new_price: float):
+def set_item_price(self, item_id: int, new_price: float):
         """
         Updates the price of an item in the database.
 
@@ -199,7 +208,7 @@ class Database:
             "UPDATE inventory SET price = ? WHERE id = ?", (new_price, item_id))
         self.connection.commit()
 
-    def set_item_stock(self, item_id: int, new_stock: int):
+def set_item_stock(self, item_id: int, new_stock: int):
         """
         Updates the stock of an item in the database.
 
@@ -214,7 +223,7 @@ class Database:
             "UPDATE inventory SET stock = ? WHERE id = ?", (new_stock, item_id))
         self.connection.commit()
 
-    def set_item_image_url(self, item_id: int, new_image_url: str):
+def set_item_image_url(self, item_id: int, new_image_url: str):
         """
         Updates the image_url of an item in the database.
 
@@ -229,7 +238,7 @@ class Database:
             "UPDATE inventory SET image_url = ? WHERE id = ?", (new_image_url, item_id))
         self.connection.commit()
 
-    def set_item_category(self, item_id: int, new_category: str):
+def set_item_category(self, item_id: int, new_category: str):
         """
         Updates the category of an item in the database.
 
@@ -248,7 +257,7 @@ class Database:
     # ------------------ Users -------------------
     # --------------------------------------------
 
-    def insert_user(self, username: str, password_hash: str, email: str, first_name: str, last_name: str) -> None:
+def insert_user(self, username: str, password_hash: str, email: str, first_name: str, last_name: str) -> None:
         """
         Inserts a new user into the database.
 
@@ -267,7 +276,7 @@ class Database:
 
     # ------ Getter methods ------
 
-    def get_all_user_information(self):
+def get_all_user_information(self):
         """
         Gets all user information from the database.
 
@@ -280,7 +289,7 @@ class Database:
         self.cursor.execute("SELECT * FROM users")
         return self.cursor.fetchall()
 
-    def get_password_hash_by_username(self, username: str):
+def get_password_hash_by_username(self, username: str):
         """
         Gets the password hash of a user from the database.
 
@@ -294,7 +303,7 @@ class Database:
             "SELECT password_hash FROM users WHERE username = ?", (username,))
         return self.cursor.fetchone()
 
-    def get_email_by_username(self, username: str):
+def get_email_by_username(self, username: str):
         """
         Gets the email of a user from the database.
 
@@ -308,7 +317,7 @@ class Database:
             "SELECT email FROM users WHERE username = ?", (username,))
         return self.cursor.fetchone()
 
-    def get_first_name_by_username(self, username: str):
+def get_first_name_by_username(self, username: str):
         """
         Gets the first name of a user from the database.
 
@@ -322,7 +331,7 @@ class Database:
             "SELECT first_name FROM users WHERE username = ?", (username,))
         return self.cursor.fetchone()
 
-    def get_last_name_by_username(self, username: str):
+def get_last_name_by_username(self, username: str):
         """
         Gets the last name of a user from the database.
 
@@ -338,7 +347,7 @@ class Database:
 
     # ------ Setter methods ------
 
-    def set_password_hash(self, username: str, new_password_hash: str):
+def set_password_hash(self, username: str, new_password_hash: str):
         """
         Updates the password hash of a user in the database.
 
@@ -353,7 +362,7 @@ class Database:
             "UPDATE users SET password_hash = ? WHERE username = ?", (new_password_hash, username))
         self.connection.commit()
 
-    def set_email(self, username: str, new_email: str):
+def set_email(self, username: str, new_email: str):
         """
         Updates the email of a user in the database.
 
@@ -368,7 +377,7 @@ class Database:
             "UPDATE users SET email = ? WHERE username = ?", (new_email, username))
         self.connection.commit()
 
-    def set_first_name(self, username: str, new_first_name: str):
+def set_first_name(self, username: str, new_first_name: str):
         """
         Updates the first name of a user in the database.
 
@@ -383,7 +392,7 @@ class Database:
             "UPDATE users SET first_name = ? WHERE username = ?", (new_first_name, username))
         self.connection.commit()
 
-    def set_last_name(self, username: str, new_last_name: str):
+def set_last_name(self, username: str, new_last_name: str):
         """
         Updates the last name of a user in the database.
 
@@ -402,7 +411,7 @@ class Database:
     # ------------------ Sales -------------------
     # --------------------------------------------
 
-    def insert_new_sale(self, transaction_id: int, username: str, item_id: int, quantity: int, sale_date: dt.date, cost: float):
+def insert_new_sale(self, transaction_id: int, username: str, item_id: int, quantity: int, sale_date: dt.date, cost: float):
         """
         Inserts a new sale into the database.
 
@@ -424,7 +433,7 @@ class Database:
 
     # ------ Getter methods ------
 
-    def get_full_sales_information(self):
+def get_full_sales_information(self):
         """
         Gets all sales information from the database.
 
@@ -437,7 +446,7 @@ class Database:
         self.cursor.execute("SELECT * FROM sales")
         return self.cursor.fetchall()
 
-    def get_transaction_id_by_sale_id(self, sale_id: int):
+def get_transaction_id_by_sale_id(self, sale_id: int):
         """
         Gets the transaction id for a sale from the database.
 
@@ -451,7 +460,7 @@ class Database:
             "SELECT transaction_id FROM sales WHERE sale_id = ?", (sale_id,))
         return self.cursor.fetchone()
 
-    def get_username_by_sale_id(self, sale_id: int):
+def get_username_by_sale_id(self, sale_id: int):
         """
         Gets the username for a sale from the database.
 
@@ -465,7 +474,7 @@ class Database:
             "SELECT username FROM sales WHERE sale_id = ?", (sale_id,))
         return self.cursor.fetchone()
 
-    def get_item_id_by_sale_id(self, sale_id: int):
+def get_item_id_by_sale_id(self, sale_id: int):
         """
         Gets the item id for a sale from the database.
 
@@ -479,7 +488,7 @@ class Database:
             "SELECT item_id FROM sales WHERE sale_id = ?", (sale_id,))
         return self.cursor.fetchone()
 
-    def get_quantity_by_sale_id(self, sale_id: int):
+def get_quantity_by_sale_id(self, sale_id: int):
         """
         Gets the quantity for a sale from the database.
 
@@ -493,7 +502,7 @@ class Database:
             "SELECT quantity FROM sales WHERE sale_id = ?", (sale_id,))
         return self.cursor.fetchone()
 
-    def get_sale_date_by_sale_id(self, sale_id: int):
+def get_sale_date_by_sale_id(self, sale_id: int):
         """
         Gets the sale date for a sale from the database.
 
@@ -507,7 +516,7 @@ class Database:
             "SELECT sale_date FROM sales WHERE sale_id = ?", (sale_id,))
         return self.cursor.fetchone()
 
-    def get_cost_by_sale_id(self, sale_id: int):
+def get_cost_by_sale_id(self, sale_id: int):
         """
         Gets the cost for a sale from the database.
 
@@ -521,7 +530,7 @@ class Database:
             "SELECT cost FROM sales WHERE sale_id = ?", (sale_id,))
         return self.cursor.fetchone()
 
-    def get_full_sale_by_id(self, sale_id: int):
+def get_full_sale_by_id(self, sale_id: int):
         """
         Gets the sales for a sale from the database.
 
@@ -535,7 +544,7 @@ class Database:
             "SELECT * FROM sales WHERE sale_id = ?", (sale_id,))
         return self.cursor.fetchone()
 
-    def get_sales_by_transaction_id(self, transaction_id: int):
+def get_sales_by_transaction_id(self, transaction_id: int):
         """
         Gets the sales for a transaction from the database.
 
@@ -549,7 +558,7 @@ class Database:
             "SELECT * FROM sales WHERE transaction_id = ?", (transaction_id,))
         return self.cursor.fetchall()
 
-    def get_sales_by_username(self, username: str):
+def get_sales_by_username(self, username: str):
         """
         Gets the sales for a user from the database.
 
@@ -563,7 +572,7 @@ class Database:
             "SELECT * FROM sales WHERE username = ?", (username,))
         return self.cursor.fetchall()
 
-    def get_sales_by_item_id(self, item_id: int):
+def get_sales_by_item_id(self, item_id: int):
         """
         Gets the sales for an item from the database.
 
@@ -577,7 +586,7 @@ class Database:
             "SELECT * FROM sales WHERE item_id = ?", (item_id,))
         return self.cursor.fetchall()
 
-    def get_sales_by_date_range(self, start_date: dt.date, end_date: dt.date):
+def get_sales_by_date_range(self, start_date: dt.date, end_date: dt.date):
         """
         Gets the sales for a date range from the database.
 
@@ -592,7 +601,7 @@ class Database:
             "SELECT * FROM sales WHERE sale_date BETWEEN ? AND ?", (start_date, end_date))
         return self.cursor.fetchall()
 
-    def get_sales_by_quantity_range(self, start_quantity: int, end_quantity: int):
+def get_sales_by_quantity_range(self, start_quantity: int, end_quantity: int):
         """
         Gets the sales for a quantity range from the database.
 
@@ -607,7 +616,7 @@ class Database:
             "SELECT * FROM sales WHERE quantity BETWEEN ? AND ?", (start_quantity, end_quantity))
         return self.cursor.fetchall()
 
-    def get_sales_by_cost_range(self, start_cost: float, end_cost: float):
+def get_sales_by_cost_range(self, start_cost: float, end_cost: float):
         """
         Gets the sales for a cost range from the database.
 
@@ -624,7 +633,7 @@ class Database:
 
     # ------ Setter methods ------
 
-    def set_sale_transaction_id(self, sale_id: int, new_transaction_id: int):
+def set_sale_transaction_id(self, sale_id: int, new_transaction_id: int):
         """
         Updates the transaction id of a sale in the database.
 
@@ -639,7 +648,7 @@ class Database:
             "UPDATE sales SET transaction_id = ? WHERE id = ?", (new_transaction_id, sale_id))
         self.connection.commit()
 
-    def set_sale_username(self, sale_id: int, new_username: str):
+def set_sale_username(self, sale_id: int, new_username: str):
         """
         Updates the username of a sale in the database.
 
@@ -654,7 +663,7 @@ class Database:
             "UPDATE sales SET username = ? WHERE id = ?", (new_username, sale_id))
         self.connection.commit()
 
-    def set_sale_item_id(self, sale_id: int, new_item_id: int):
+def set_sale_item_id(self, sale_id: int, new_item_id: int):
         """
         Updates the item id of a sale in the database.
 
@@ -669,7 +678,7 @@ class Database:
             "UPDATE sales SET item_id = ? WHERE id = ?", (new_item_id, sale_id))
         self.connection.commit()
 
-    def set_sale_date(self, sale_id: int, new_sale_date: dt.date):
+def set_sale_date(self, sale_id: int, new_sale_date: dt.date):
         """
         Updates the sale date of a sale in the database.
 
@@ -684,7 +693,7 @@ class Database:
             "UPDATE sales SET sale_date = ? WHERE id = ?", (new_sale_date, sale_id))
         self.connection.commit()
 
-    def set_sale_quantity(self, sale_id: int, new_quantity: int):
+def set_sale_quantity(self, sale_id: int, new_quantity: int):
         """
         Updates the quantity of a sale in the database.
 
@@ -699,7 +708,7 @@ class Database:
             "UPDATE sales SET quantity = ? WHERE id = ?", (new_quantity, sale_id))
         self.connection.commit()
 
-    def set_sale_cost(self, sale_id: int, discount: float = 0, tax: float = 0.05):
+def set_sale_cost(self, sale_id: int, discount: float = 0, tax: float = 0.05):
         """
         Updates the cost of a sale in the database.
 

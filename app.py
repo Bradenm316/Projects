@@ -17,6 +17,7 @@ sessions.add_new_session(username, db)
 owners =[]
 order = {}
 customer_info ={}
+new_stock = {}
 
 @app.route('/')
 def index_page():
@@ -245,6 +246,7 @@ def add_product_to_cart():
     user_session.submit_cart()
 
     return render_template('shopping_cart.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
+
 
 # @app.route('/shopping_cart', methods=['POST'])
 # def add_product_to_cart():
