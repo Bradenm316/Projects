@@ -17,6 +17,7 @@ sessions.add_new_session(username, db)
 owners =[]
 order = {}
 customer_info ={}
+new_stock = {}
 
 @app.route('/')
 def index_page():
@@ -274,7 +275,7 @@ def add_product_to_cart():
                 if item['stock'] >= count:
                     updated_stock = item['stock'] - count
                     db.update_product_stock(item['id'], updated_stock)
-                    db.insert_purchase(customer_info, item['item_name'], count, cost, flavor, toppings, fillings)
+                    item['stock'] = new_stock
                     order[item['item_name']] = {'count': count, 'cost': round(cost,2), 'image_url': item['image_url'],
                                         "flavor": flavor, "toppings":toppings, "fillings":fillings, 
                                         "customization_cost_flavor": customization_cost_flavor,

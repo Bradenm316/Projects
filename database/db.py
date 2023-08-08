@@ -110,38 +110,6 @@ class Database:
             "SELECT price FROM inventory WHERE id = ?", (item_id,))
         return self.cursor.fetchone()
 
-    def get_item_stock_by_id(self, item_id: int):
-        """
-        Gets the stock of an item from the database.
-
-        args:
-            - item_id: The id of the item to get.
-
-        returns:
-            - The stock of the item with the given id.
-        """
-        self.cursor.execute(
-            "SELECT stock FROM inventory WHERE id = ?", (item_id,))
-        return self.cursor.fetchone()
-    def update_product_stock(self, product_id, new_stock):
-        """
-        Update the stock value for a specific product.
-        
-        Args:
-        product_id (int): The ID of the product to update.
-        new_stock (int): The new stock value for the product.
-        
-        Returns:
-        None
-        """
-        query = """
-        UPDATE products
-        SET stock = ?
-        WHERE id = ?;
-        """
-        self.cursor.execute(query, (new_stock, product_id))
-        self.connection.commit()
-
 def insert_purchase(self, customer_username, item_name, quantity, cost, flavor, toppings, fillings):
     """
     Insert a new purchase record into the `purchases` table.
@@ -164,8 +132,6 @@ def insert_purchase(self, customer_username, item_name, quantity, cost, flavor, 
     """
     self.cursor.execute(query, (customer_username, item_name, quantity, cost, flavor, toppings, fillings))
     self.connection.commit()
-
-
 
     def get_item_image_url_by_id(self, item_id: int):
         """
