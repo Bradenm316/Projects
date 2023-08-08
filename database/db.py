@@ -223,6 +223,12 @@ def set_item_stock(self, item_id: int, new_stock: int):
             "UPDATE inventory SET stock = ? WHERE id = ?", (new_stock, item_id))
         self.connection.commit()
 
+def update_product_stock(self, item_id, new_stock):
+        with self.connection:
+            self.cursor.execute(
+                "UPDATE inventory SET stock = ? WHERE id = ?", (new_stock, item_id)
+            )
+
 def set_item_image_url(self, item_id: int, new_image_url: str):
         """
         Updates the image_url of an item in the database.
