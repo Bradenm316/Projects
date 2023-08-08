@@ -2,7 +2,7 @@
 
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session
 from core.session import Sessions
 
 app = Flask(__name__)
