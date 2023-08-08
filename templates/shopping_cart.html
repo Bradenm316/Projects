@@ -39,15 +39,15 @@
         </table>
         <h2>Your Total: $<span id="total_cost">{{ total_cost }}</span></h2>
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12" id="index_buttons">
                 <label for="discount_code">Discount Code:</label>
                 <input type="text" id="discount_code" name="discount_code">
                 <button type="button" onclick="applyDiscount()">Apply Discount</button>
-                <span id="discount_status" style="color: red;"></span> <!-- New span element to display the discount status -->
+                <span id="discount_status" style="color: red;"></span> 
             </div>
-        </div>
-
+        </div> -->
+        <!-- New span element to display the discount status -->
         <div class="row">
             <div class="col-md-12" id="index_buttons">
                 <button onclick="history.go(-1)" class="btn btn-primary" id="continue_shopping_button">Continue Shopping</button>
@@ -57,8 +57,8 @@
         <form action="/checkout" method="post">
             <div class="row">
                 <div class="col-md-12" id="index_buttons">
-                    <!-- Add a hidden input field to store the discounted total -->
-                    <input type="hidden" id="discounted_total" name="discounted_total" value="{{ total_cost }}">
+                    <!-- Add a hidden input field to store the discounted total
+                    <input type="hidden" id="discounted_total" name="discounted_total" value="{{ total_cost }}"> -->
                     <button type="submit" class="btn btn-primary" id="checkout_button">Checkout</button>
                 </div>
             </div>
@@ -66,7 +66,7 @@
     </div>
 </div>
 
-<script>
+<!-- <script>
     function applyDiscount() {
         var discountCode = document.getElementById('discount_code').value;
         var discountStatusElement = document.getElementById('discount_status'); // Get the discount status element
@@ -94,6 +94,6 @@
             discountStatusElement.style.color = 'red'; // Set the color to red for error
         }
     }
-</script>
+</script> -->
 
 {% endblock %}
